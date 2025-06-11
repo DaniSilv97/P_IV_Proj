@@ -1,3 +1,6 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
 function BaseLayout({ children }) {
   return (
     <button 
@@ -20,5 +23,9 @@ function BaseLayout({ children }) {
     </button>
   );
 }
+
+BaseLayout.propTypes = {
+  children: PropTypes.node
+};
 
 export default BaseLayout;
