@@ -5,7 +5,7 @@ import Card1 from "../../assets/card-1.jpeg"
 import Card2 from "../../assets/card-2.jpg"
 import Card3 from "../../assets/card-3.png"
 
-export default function FeatureCard() {
+function FeatureCard() {
   const cards = [
     {
       title: 'Precision Weather Monitoring',
@@ -74,3 +74,4 @@ export default function FeatureCard() {
   );
 };
 
+export default FeatureCard;

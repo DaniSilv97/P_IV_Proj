@@ -1,0 +1,65 @@
+@keyframes float1 {
+  0%, 100% { transform: translateY(0px) translateX(0px) scale(1); }
+  33% { transform: translateY(-20px) translateX(10px) scale(1.1); }
+  66% { transform: translateY(10px) translateX(-10px) scale(0.9); }
+}
+@keyframes float2 {
+  0%, 100% { transform: translateY(0px) translateX(0px) scale(1); }
+  50% { transform: translateY(-30px) translateX(-15px) scale(1.2); }
+}
+@keyframes float3 {
+  0%, 100% { transform: translateY(0px) translateX(0px) scale(1); }
+  25% { transform: translateY(15px) translateX(20px) scale(0.8); }
+  75% { transform: translateY(-10px) translateX(-5px) scale(1.1); }
+}
+
+.animate-float1 { animation: float1 8s ease-in-out infinite; }
+.animate-float2 { animation: float2 12s ease-in-out infinite 2s; }
+.animate-float3 { animation: float3 10s ease-in-out infinite 4s; }
+
+
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-fadeInDown {
+  animation: fadeInDown 0.6s ease-out forwards;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.animation-delay-400 {
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+.animation-delay-600 {
+  animation-delay: 0.6s;
+  opacity: 0;
+}

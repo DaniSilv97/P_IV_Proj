@@ -12,9 +12,9 @@ function BaseLayout({ children }) {
         py-1 
         rounded-full 
         font-medium
+        shadow-md
         transition-all
         ease-in-out
-        shadow-md
         hover:translate-x-[0.1rem]
         hover:-translate-y-[0.1rem]
         hover:shadow-lg

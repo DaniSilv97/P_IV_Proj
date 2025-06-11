@@ -1,22 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import BaseButton from "../components/BaseButton";
 
-function BaseLayout({ children }) {
-  function Nav(showHome = true, showFields = true, isLoggedIn = false){
+
+function BaseLayout({ children, isLoggedIn = false, showRegister = false}) {
+  function Nav(){
     return(
       <nav className="fixed top-4 left-1/2 -translate-x-1/2 bg-white shadow-md rounded-full px-6 py-2 flex justify-between items-center w-[90%] max-w-4xl z-50">
         <div className="flex space-x-4">
-          {showHome && (
-            <Link to="/" className="text-slate-700 hover:text-black font-medium">
-              Home
-            </Link>
-          )}
-          {showFields && (
-            <Link to="/fields" className="text-slate-700 hover:text-black font-medium">
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `text-slate-700 hover:text-black font-medium transition ${isActive ? "text-main-hover" : ""}`
+            }
+          >
+            Home
+          </NavLink>
+
+          {isLoggedIn && (
+            <NavLink
+              to="/fields"
+              className={({ isActive }) =>
+                `text-slate-700 hover:text-black font-medium transition ${isActive ? "text-main-hover" : ""}`
+              }
+            >
               My Fields
-            </Link>
+            </NavLink>
           )}
         </div>
         <div>
@@ -24,24 +34,27 @@ function BaseLayout({ children }) {
             <div className="w-8 h-8 rounded-full bg-gray-400 flex items-center justify-center text-white font-bold">
               U
             </div>
+          ) : showRegister ? (
+            <Link to="/register">
+              <BaseButton>
+                Register
+              </BaseButton>
+            </Link>
           ) : (
-            <BaseButton>
-              Login
-            </BaseButton>
+            <Link to="/login">
+              <BaseButton>
+                Login
+              </BaseButton>
+            </Link>
           )}
         </div>
       </nav>
     )
   }
-  Nav.propTypes = {
-    showHome: PropTypes.bool,
-    showFields: PropTypes.bool,
-    isLoggedIn: PropTypes.bool
-  }
 
   return (
     <>
-      <Nav></Nav>
+      <Nav/>
       <div className="w-full h-full">
         {children}
       </div>
@@ -50,7 +63,9 @@ function BaseLayout({ children }) {
 }
 
 BaseLayout.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  isLoggedIn: PropTypes.bool,
+  showRegister: PropTypes.bool
 };
 
 export default BaseLayout;
