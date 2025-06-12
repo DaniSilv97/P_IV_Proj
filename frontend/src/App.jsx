@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 
-import { OpenRoute, PublicRoute } from './components/RouteAuth';
+import { OpenRoute, ProtectedRoute, PublicRoute } from './components/RouteAuth';
 import Home from './views/Home';
 import Login from './views/Login';
 import Register from './views/Register';
@@ -17,8 +17,6 @@ function App() {
         const res = await fetch('http://localhost:5000/api/session', {
           credentials: 'include',
         });
-        console.log(res);
-        
         if (res.ok) {
           const data = await res.json();
           console.log('User is logged in:', data);
@@ -53,21 +51,21 @@ function App() {
       } />
       
       <Route path="/fields" element={
-        <>
+        <ProtectedRoute>
           <FieldsLayout />
-        </>
+        </ProtectedRoute>
         
       } >
         <Route index element={
-          <>
+          <ProtectedRoute>
             <MyFields />
-          </>
+          </ProtectedRoute>
           
         } /> 
         <Route path=":id" element={
-          <>
+          <ProtectedRoute>
             <MyField />
-          </>
+          </ProtectedRoute>
           
         } />
       </Route>

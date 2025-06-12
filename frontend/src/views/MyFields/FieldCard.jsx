@@ -41,6 +41,11 @@ function FieldCard({ image, name, weather, onEdit, onDelete }) {
 FieldCard.propTypes = {
   image: PropTypes.string,
   name: PropTypes.string.isRequired,
+  weather: PropTypes.shape({
+    temperature: PropTypes.number.isRequired,
+    humidity: PropTypes.number.isRequired,
+    icon: PropTypes.string.isRequired,
+  }).isRequired,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
 };
