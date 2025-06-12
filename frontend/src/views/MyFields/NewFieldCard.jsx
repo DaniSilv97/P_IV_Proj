@@ -3,7 +3,7 @@ function NewFieldCard() {
   return (
     <div
       className="
-        rounded-2xl overflow-hidden bg-white shadow-lg w-64 h-60 flex items-center justify-center text-main transition-all ease-in-out
+        rounded-2xl overflow-hidden bg-white shadow-lg w-64 h-60 flex items-center justify-center text-main transition-all ease-in-out m-auto
         hover:text-main-hover hover:translate-x-1 hover:-translate-y-1 hover:shadow-xl"
     >
       <svg

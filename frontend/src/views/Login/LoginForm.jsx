@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useAuth } from '../../contexts/AuthContext';
+
 
 function EyeSvg(){
   return (
@@ -49,9 +52,37 @@ function LoginForm() {
     }));
   };
 
-  const handleSubmit = () => {
+  const navigate = useNavigate();
+  const { setUser } = useAuth();
+
+  const handleSubmit = async () => {
     console.log('Login attempt:', formData);
+    try {
+      const res = await fetch('http://localhost:5000/api/login', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password
+        })
+      });
+
+      if (res.ok) {
+        const userData = await res.json();
+        setUser(userData);
+        console.log('Logged in successfully:', userData);
+        navigate('/');
+      } else {
+        console.log('Login failed');
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+    }
   };
+
 
   return (
     <div className="space-y-4">

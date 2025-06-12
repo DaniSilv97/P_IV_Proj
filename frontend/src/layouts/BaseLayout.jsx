@@ -1,12 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import BaseButton from "../components/BaseButton";
+import { useAuth } from '../contexts/AuthContext';
 
+function BaseLayout({ children, showRegister = false }) {
+  const { user, setUser, checkedSession } = useAuth();
+  const navigate = useNavigate();
 
-function BaseLayout({ children, isLoggedIn = false, showRegister = false}) {
-  function Nav(){
-    return(
+  const handleLogout = async () => {
+    console.log('Logging out user:', user);
+    try {
+      const res = await fetch('http://localhost:5000/api/logout', {
+        method: 'POST',
+        credentials: 'include',
+      });
+      if (res.ok) {
+        setUser(null);
+        navigate('/login');
+      }
+    } catch (err) {
+      console.error('Logout failed:', err);
+    }
+  };
+
+  function Nav() {
+    return (
       <nav className="fixed top-4 left-1/2 -translate-x-1/2 bg-white shadow-md rounded-full px-6 py-2 flex justify-between items-center w-[90%] max-w-4xl z-50">
         <div className="flex space-x-4">
           <NavLink
@@ -18,7 +37,7 @@ function BaseLayout({ children, isLoggedIn = false, showRegister = false}) {
             Home
           </NavLink>
 
-          {isLoggedIn && (
+          {user && (
             <NavLink
               to="/fields"
               className={({ isActive }) =>
@@ -29,11 +48,12 @@ function BaseLayout({ children, isLoggedIn = false, showRegister = false}) {
             </NavLink>
           )}
         </div>
+
         <div>
-          {isLoggedIn ? (
-            <div className="w-8 h-8 rounded-full bg-gray-400 flex items-center justify-center text-white font-bold">
-              U
-            </div>
+          {user ? (
+            <BaseButton onClick={handleLogout}>
+              Logout
+            </BaseButton>
           ) : showRegister ? (
             <Link to="/register">
               <BaseButton>
@@ -49,12 +69,14 @@ function BaseLayout({ children, isLoggedIn = false, showRegister = false}) {
           )}
         </div>
       </nav>
-    )
+    );
   }
+
+  if (!checkedSession) return null;
 
   return (
     <>
-      <Nav/>
+      <Nav />
       <div className="w-full h-full">
         {children}
       </div>
@@ -64,7 +86,6 @@ function BaseLayout({ children, isLoggedIn = false, showRegister = false}) {
 
 BaseLayout.propTypes = {
   children: PropTypes.node,
-  isLoggedIn: PropTypes.bool,
   showRegister: PropTypes.bool
 };
 

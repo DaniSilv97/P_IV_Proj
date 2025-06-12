@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Daniel",
+      "surname": "Silva",
+      "email": "danifilipesilv@gmail.com",
+      "password": "123"
+    },
+    {
+      "id": 2,
+      "name": "Jhon",
+      "surname": "Doe",
+      "email": "danistormes@gmail.com",
+      "password": "123"
+    },
+    {
+      "id": 3,
+      "name": "Filipe",
+      "surname": "Azevedo",
+      "email": "danifilipinos1011@gmail.com",
+      "password": "123"
+    }
+  ]
+}

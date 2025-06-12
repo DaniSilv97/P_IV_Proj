@@ -44,7 +44,7 @@ function MyFields() {
   return (
     <>
       <FieldsHeader/>
-      <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10 p-4">
+      <div className="mt-8 grid grid-cols-[repeat(auto-fit,minmax(15rem,1fr))] gap-x-6 gap-y-10 p-4 w-full justify-center">
         {fieldCards.map((card) => (
           <FieldCard key={card.id} {...card} ></FieldCard>
         ))}

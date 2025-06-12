@@ -6,7 +6,7 @@ import DeleteCircularButton from '../../components/DeleteCircularButton';
 
 function FieldCard({ image, name, temperature, humidity, onEdit, onDelete }) {
   return (
-    <div className="relative rounded-2xl  bg-white shadow-lg w-64 h-fit">
+    <div className="relative rounded-2xl  bg-white shadow-lg w-64 h-fit m-auto">
       <div className="absolute -top-2 -right-2 flex gap-2 z-10">
         <EditCircularButton onEdit={onEdit} />
         <DeleteCircularButton onDelete={onDelete} />

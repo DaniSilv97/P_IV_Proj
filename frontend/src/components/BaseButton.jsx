@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function BaseLayout({ children }) {
+function BaseLayout({ children, onClick }) {
   return (
     <button 
+      onClick={onClick}
       className="
         text-white 
         bg-main 
@@ -25,7 +26,8 @@ function BaseLayout({ children }) {
 }
 
 BaseLayout.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  onClick: PropTypes.func,
 };
 
 export default BaseLayout;
