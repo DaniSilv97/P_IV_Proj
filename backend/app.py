@@ -5,6 +5,9 @@ import os
 from datetime import datetime
 import uuid
 import json
+import requests
+from dotenv import load_dotenv
+load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -92,24 +95,46 @@ def get_session():
 def get_fields():
   if not session.get('logged_in'):
     return jsonify({"error": "Unauthorized"}), 401
-  
+
   user_id = session.get('user_id')
-  print(f"User {user_id}")
   if not user_id:
     return jsonify({"error": "User ID not found in session"}), 401
-  
-  # Load fields data
+
   try:
     with open('./data/fields.json', 'r') as f:
       fields_data = json.load(f)
       fields = fields_data.get('fields', [])
   except Exception as e:
     return jsonify({"error": "Failed to load fields data"}), 500
-  
-  # Filter fields belonging to this user
+
   user_fields = [field for field in fields if field.get('user_id') == user_id]
-  
-  return jsonify({"fields": user_fields})
+  weather_api_key = os.environ.get('OPENWEATHER_API_KEY')
+
+  enriched_fields = []
+  for field in user_fields:
+    lat = field.get('latitude')
+    lon = field.get('longitude')
+    weather = {}
+
+    if weather_api_key and lat and lon:
+      try:
+        weather_url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric&appid={weather_api_key}"
+        response = requests.get(weather_url)
+        if response.ok:
+          data = response.json()
+          weather = {
+            "temperature": data.get("main", {}).get("temp"),
+            "description": data.get("weather", [{}])[0].get("description"),
+            "icon": data.get("weather", [{}])[0].get("icon"),
+            "humidity": data.get("main", {}).get("humidity"),
+          }
+      except Exception as e:
+        weather = {"error": "Failed to fetch weather"}
+
+    field['weather'] = weather
+    enriched_fields.append(field)
+
+  return jsonify({"fields": enriched_fields})
 
 
 if __name__ == '__main__':
