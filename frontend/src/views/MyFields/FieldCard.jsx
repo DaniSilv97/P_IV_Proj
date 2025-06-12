@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import FieldDefault from '../../assets/field-default.png'
 import EditCircularButton from '../../components/EditCircularButton';
 import DeleteCircularButton from '../../components/DeleteCircularButton';
+import WeatherIcon from '../../components/WeatherIcon';
 
-function FieldCard({ image, name, temperature, humidity, onEdit, onDelete }) {
+function FieldCard({ image, name, weather, onEdit, onDelete }) {
   return (
     <div className="relative rounded-2xl  bg-white shadow-lg w-64 h-fit m-auto">
       <div className="absolute -top-2 -right-2 flex gap-2 z-10">
@@ -20,12 +21,17 @@ function FieldCard({ image, name, temperature, humidity, onEdit, onDelete }) {
         />
       </div>
       <div className="h-20 flex justify-between items-center px-4 py-3 border-t">
-        <div className="text-gray-800 font-semibold text-base">
-          {name}
+        <div className="text-gray-800 font-semibold text-base grow">
+          <div className='pl-2 w-full text-left '>
+            {name}
+          </div>
+        </div>
+        <div>
+          <WeatherIcon code={weather.icon} />
         </div>
         <div className="text-right text-sm text-gray-600">
-          <div>{temperature}°C</div>
-          <div>{humidity}%</div>
+          <div>{weather.temperature}°C</div>
+          <div>{weather.humidity}%</div>
         </div>
       </div>
     </div>
@@ -35,8 +41,6 @@ function FieldCard({ image, name, temperature, humidity, onEdit, onDelete }) {
 FieldCard.propTypes = {
   image: PropTypes.string,
   name: PropTypes.string.isRequired,
-  temperature: PropTypes.string.isRequired,
-  humidity: PropTypes.string.isRequired,
   onEdit: PropTypes.func,
   onDelete: PropTypes.func,
 };

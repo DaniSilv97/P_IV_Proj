@@ -2,8 +2,6 @@ from flask import Flask, request, session, jsonify
 from flask_socketio import SocketIO, emit, join_room, leave_room
 from flask_cors import CORS
 import os
-from datetime import datetime
-import uuid
 import json
 import requests
 from dotenv import load_dotenv

@@ -2,27 +2,27 @@
   "fields": [
     {
       "field_id": 1,
-      "name": "Field 1",
+      "name": "ISTEC-Porto",
       "crop_id": "1",
       "user_id": "1",
-      "latitude": 40.7128,
-      "longitude": -74.0060
+      "latitude": 41.16655390589896,
+      "longitude": -8.5934845501959
     },
     {
       "field_id": 2,
-      "name": "Field 2",
+      "name": "ISTEC",
       "crop_id": "1",
       "user_id": "1",
-      "latitude": 40.7128,
-      "longitude": -74.0060
+      "latitude": 38.76873179803323,
+      "longitude":  -9.160089199301497
     },
     {
       "field_id": 3,
-      "name": "Field 3",
+      "name": "Quinta do Lago",
       "crop_id": "1",
       "user_id": "1",
-      "latitude": 40.7128,
-      "longitude": -74.0060
+      "latitude": 37.022346621330776,
+      "longitude": -8.020544410107133
     }
   ]
 }

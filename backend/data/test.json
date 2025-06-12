@@ -1,46 +1,46 @@
 {
-  "coord": {
-    "lon": -74.0059,
-    "lat": 40.7128
-  },
-  "weather": [
+  "fields": [
     {
-      "id": 800,
-      "main": "Clear",
-      "description": "clear sky",
-      "icon": "01d"
+      "crop_id": "1",
+      "field_id": 1,
+      "latitude": 40.7128,
+      "longitude": -74.006,
+      "name": "Field 1",
+      "user_id": "1",
+      "weather": {
+        "description": "clear sky",
+        "humidity": 44,
+        "icon": "01d",
+        "temperature": 30.98
+      }
+    },
+    {
+      "crop_id": "1",
+      "field_id": 2,
+      "latitude": 40.7128,
+      "longitude": -74.006,
+      "name": "Field 2",
+      "user_id": "1",
+      "weather": {
+        "description": "clear sky",
+        "humidity": 44,
+        "icon": "01d",
+        "temperature": 30.98
+      }
+    },
+    {
+      "crop_id": "1",
+      "field_id": 3,
+      "latitude": 40.7128,
+      "longitude": -74.006,
+      "name": "Field 3",
+      "user_id": "1",
+      "weather": {
+        "description": "clear sky",
+        "humidity": 44,
+        "icon": "01d",
+        "temperature": 30.98
+      }
     }
-  ],
-  "base": "stations",
-  "main": {
-    "temp": 29.84,
-    "feels_like": 30.52,
-    "temp_min": 28.19,
-    "temp_max": 31.27,
-    "pressure": 1016,
-    "humidity": 48,
-    "sea_level": 1016,
-    "grnd_level": 1015
-  },
-  "visibility": 10000,
-  "wind": {
-    "speed": 6.69,
-    "deg": 240,
-    "gust": 9.26
-  },
-  "clouds": {
-    "all": 0
-  },
-  "dt": 1749745175,
-  "sys": {
-    "type": 2,
-    "id": 2037026,
-    "country": "US",
-    "sunrise": 1749720265,
-    "sunset": 1749774458
-  },
-  "timezone": -14400,
-  "id": 5128581,
-  "name": "New York",
-  "cod": 200
+  ]
 }
