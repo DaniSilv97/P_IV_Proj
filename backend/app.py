@@ -1,10 +1,3 @@
-"""
-app.py
-
-This module initializes and runs a Flask backend with SocketIO support.
-It provides basic user login/logout endpoints and enables CORS for a React frontend.
-"""
-
 from flask import Flask, request, session, jsonify
 from flask_socketio import SocketIO, emit, join_room, leave_room
 from flask_cors import CORS
@@ -35,10 +28,6 @@ connected_users = {}
 
 @app.route('/')
 def index():
-  """
-  Health check endpoint.
-  Returns a simple JSON message indicating the backend is running.
-  """
   return jsonify({"message": "Flask backend is running!", "status": "success"})
 
 @app.route('/api/login', methods=['POST'])
@@ -65,7 +54,7 @@ def login():
     return jsonify({"error": "Invalid email or password"}), 401
 
   # Create session
-  session['user_id'] = str(uuid.uuid4())
+  session['user_id'] =  user['user_id']
   session['email'] = user['email']
   session['name'] = user.get('name')
   session['surname'] = user.get('surname')
@@ -81,10 +70,6 @@ def login():
 
 @app.route('/api/logout', methods=['POST'])
 def logout():
-  """
-  Logout endpoint.
-  Clears the session and removes the user from connected_users.
-  """
   user_id = session.get('user_id')
   if user_id and user_id in connected_users:
     del connected_users[user_id]
@@ -102,6 +87,30 @@ def get_session():
     })
   else:
     return jsonify({"logged_in": False}), 401
+
+@app.route('/api/fields', methods=['GET'])
+def get_fields():
+  if not session.get('logged_in'):
+    return jsonify({"error": "Unauthorized"}), 401
+  
+  user_id = session.get('user_id')
+  print(f"User {user_id}")
+  if not user_id:
+    return jsonify({"error": "User ID not found in session"}), 401
+  
+  # Load fields data
+  try:
+    with open('./data/fields.json', 'r') as f:
+      fields_data = json.load(f)
+      fields = fields_data.get('fields', [])
+  except Exception as e:
+    return jsonify({"error": "Failed to load fields data"}), 500
+  
+  # Filter fields belonging to this user
+  user_fields = [field for field in fields if field.get('user_id') == user_id]
+  
+  return jsonify({"fields": user_fields})
+
 
 if __name__ == '__main__':
   # Run the Flask app with SocketIO support

@@ -1,0 +1,28 @@
+{
+  "fields": [
+    {
+      "field_id": 1,
+      "name": "Field 1",
+      "crop_id": "1",
+      "user_id": "1",
+      "latitude": 40.7128,
+      "longitude": -74.0060
+    },
+    {
+      "field_id": 2,
+      "name": "Field 2",
+      "crop_id": "1",
+      "user_id": "1",
+      "latitude": 40.7128,
+      "longitude": -74.0060
+    },
+    {
+      "field_id": 3,
+      "name": "Field 3",
+      "crop_id": "1",
+      "user_id": "1",
+      "latitude": 40.7128,
+      "longitude": -74.0060
+    }
+  ]
+}
