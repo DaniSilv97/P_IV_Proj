@@ -26,11 +26,11 @@
     },
     {
       "field_id": "4",
-      "name": "Hello",
-      "crop_id": "2",
+      "name": "Spinach",
+      "crop_id": "4",
       "user_id": "1",
-      "latitude": 14,
-      "longitude": 109
+      "latitude": 13,
+      "longitude": -40
     }
   ]
 }

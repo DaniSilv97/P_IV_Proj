@@ -1,6 +1,7 @@
 import React from 'react'
 import BaseLayout from "../../layouts/BaseLayout";
 import { Outlet } from 'react-router-dom';
+import './Fields.css';
 
 function FieldsLayout() {
   return (
@@ -10,7 +11,7 @@ function FieldsLayout() {
           <div className="absolute inset-0 bg-gradient-to-br from-main to-main-hover  opacity-30" />
 
           <div className="relative w-full h-[90%] mt-auto flex justify-center">
-            <div className="bg-gradient-to-br from-secondary-hover to-main-hover  w-[90%] rounded-lg mb-5">
+            <div className="bg-gradient-to-br from-secondary-hover to-main-hover w-[90%] rounded-lg mb-5 overflow-y-scroll custom-scrollbar">
               <Outlet />
             </div>
           </div>

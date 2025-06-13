@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom'; // ✅ Import useParams
+import { useParams } from 'react-router-dom';
 import FieldsHeader from './MyFields/FieldsHeader';
 import FieldDefault from '../assets/field-default.png';
 import WheatField from '../assets/field-wheat.jpg';
 import CarrotField from '../assets/field-carrot.jpg';
 import BasilField from '../assets/field-basil.jpg';
 import SpinachField from '../assets/field-spinach.jpg';
+import WeatherChart from './MyFields/WeatherChart';
+
 
 function MyField() {
-  const { id } = useParams(); // ✅ Get the dynamic ID
+  const { id } = useParams();
   const [field, setField] = useState(null);
   const [loading, setLoading] = useState(true);
   const [image, setImage] = useState(FieldDefault);
@@ -70,8 +72,20 @@ function MyField() {
             />
           </div>
         )}
-        <div className="">
-
+        <div>
+          {field && field.weather && (
+            <>
+              <WeatherChart weather={field.weather} />
+              <div className="p-4 bg-white rounded-xl shadow-md m-10">
+                <h2 className="text-xl font-semibold mb-4 text-slate-700">Recommendations</h2>
+                <div className="text-sm text-slate-600">
+                  <p><strong>Action:</strong> {field.recommendation.action}</p>
+                  <p><strong>Priority:</strong> {field.recommendation.priority}</p>
+                  <p><strong>Reasoning:</strong> {field.recommendation.reasoning}</p>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>app module &#8212; SmartSprout 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=6625fa76" />
+    <link rel="stylesheet" type="text/css" href="_static/groundwork.css?v=594d7a89" />
+    <script src="_static/documentation_options.js?v=8d563738"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SmartSprout 1.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">app module</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-app">
+<span id="app-module"></span><h1>app module<a class="headerlink" href="#module-app" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="app.add_crop_recommendation_to_field">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">add_crop_recommendation_to_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#add_crop_recommendation_to_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.add_crop_recommendation_to_field" title="Link to this definition">¶</a></dt>
+<dd><p>Add crop recommendation to field data.</p>
+<p>Call this function in your get_field route after getting weather data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>field_data</strong> – Dictionary with field information.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Field data with ‘recommendation’ key added.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.analyze_weather_patterns">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">analyze_weather_patterns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weather_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#analyze_weather_patterns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.analyze_weather_patterns" title="Link to this definition">¶</a></dt>
+<dd><p>Analyze weather patterns from forecast data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>weather_data</strong> – List of daily weather forecasts with segments.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with average temperature, humidity, rain/hot/cold days, and total days.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="app.app">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">app</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;Flask</span> <span class="pre">'app'&gt;</span></em><a class="headerlink" href="#app.app" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize Flask app</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="app.connected_users">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">connected_users</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#app.connected_users" title="Link to this definition">¶</a></dt>
+<dd><p>Store connected users (for production, use Redis or a database)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.create_field">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">create_field</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#create_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.create_field" title="Link to this definition">¶</a></dt>
+<dd><p>Create a new field for the logged-in user.</p>
+<p>Expects JSON with ‘name’, ‘latitude’, ‘longitude’, and ‘crop_id’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSON with created field data or error.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.delete_field">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">delete_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#delete_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.delete_field" title="Link to this definition">¶</a></dt>
+<dd><p>Delete a field by ID for the logged-in user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>field_id</strong> – ID of the field to delete.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON message indicating deletion status.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.get_crop_recommendation">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">get_crop_recommendation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crop_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weather_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#get_crop_recommendation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.get_crop_recommendation" title="Link to this definition">¶</a></dt>
+<dd><p>Get crop recommendation based on crop type and weather forecast</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>crop_id (str): “1” for Wheat, “2” for Carrot, “3” for Basil, “4” for Spinach
+weather_data (list): List of daily weather forecasts with segments</p>
+</dd>
+<dt>Returns:</dt><dd><p>dict: Recommendation with action and reasoning</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.get_field">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">get_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#get_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.get_field" title="Link to this definition">¶</a></dt>
+<dd><p>Get a specific field by ID for the logged-in user, including weather forecast and crop recommendation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>field_id</strong> – ID of the field to retrieve.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>JSON with field data, weather, and recommendation.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.get_fields">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">get_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#get_fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.get_fields" title="Link to this definition">¶</a></dt>
+<dd><p>Get all fields for the logged-in user, enriched with weather data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSON list of fields with weather info.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.get_recommendation_logic">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">get_recommendation_logic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crop_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weather_analysis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#get_recommendation_logic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.get_recommendation_logic" title="Link to this definition">¶</a></dt>
+<dd><p>Generate recommendation based on crop type and weather analysis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>crop_id</strong> – Crop ID as string.</p></li>
+<li><p><strong>crop_name</strong> – Name of the crop.</p></li>
+<li><p><strong>weather_analysis</strong> – Dictionary with weather analysis.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Recommendation dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.get_session">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">get_session</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#get_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.get_session" title="Link to this definition">¶</a></dt>
+<dd><p>Get current session information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSON with session status and user info.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.handle_connect">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">handle_connect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#handle_connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.handle_connect" title="Link to this definition">¶</a></dt>
+<dd><p>Handle new SocketIO client connection.
+Starts a thread to send weather updates periodically.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.handle_disconnect">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">handle_disconnect</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#handle_disconnect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.handle_disconnect" title="Link to this definition">¶</a></dt>
+<dd><p>Handle SocketIO client disconnection.
+Removes user from connected users.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.index">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#index"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.index" title="Link to this definition">¶</a></dt>
+<dd><p>Root endpoint to check if the Flask backend is running.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSON message indicating backend status.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.login">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">login</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#login"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.login" title="Link to this definition">¶</a></dt>
+<dd><p>Login endpoint for user authentication.</p>
+<p>Expects JSON with ‘email’ and ‘password’.
+Loads users from JSON file and checks credentials.
+Sets session data on successful login.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSON with user info or error.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.logout">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">logout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#logout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.logout" title="Link to this definition">¶</a></dt>
+<dd><p>Logout endpoint to clear user session.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>JSON message indicating logout status.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="app.send_weather_periodically">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">send_weather_periodically</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/app.html#send_weather_periodically"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#app.send_weather_periodically" title="Link to this definition">¶</a></dt>
+<dd><p>Periodically send weather updates to a connected SocketIO client.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sid</strong> – SocketIO session ID.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="app.socketio">
+<span class="sig-prename descclassname"><span class="pre">app.</span></span><span class="sig-name descname"><span class="pre">socketio</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;flask_socketio.SocketIO</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#app.socketio" title="Link to this definition">¶</a></dt>
+<dd><p>Initialize SocketIO with CORS support for the React frontend</p>
+</dd></dl>
+
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">app module</a><ul>
+<li><a class="reference internal" href="#app.add_crop_recommendation_to_field"><code class="docutils literal notranslate"><span class="pre">add_crop_recommendation_to_field()</span></code></a></li>
+<li><a class="reference internal" href="#app.analyze_weather_patterns"><code class="docutils literal notranslate"><span class="pre">analyze_weather_patterns()</span></code></a></li>
+<li><a class="reference internal" href="#app.app"><code class="docutils literal notranslate"><span class="pre">app</span></code></a></li>
+<li><a class="reference internal" href="#app.connected_users"><code class="docutils literal notranslate"><span class="pre">connected_users</span></code></a></li>
+<li><a class="reference internal" href="#app.create_field"><code class="docutils literal notranslate"><span class="pre">create_field()</span></code></a></li>
+<li><a class="reference internal" href="#app.delete_field"><code class="docutils literal notranslate"><span class="pre">delete_field()</span></code></a></li>
+<li><a class="reference internal" href="#app.get_crop_recommendation"><code class="docutils literal notranslate"><span class="pre">get_crop_recommendation()</span></code></a></li>
+<li><a class="reference internal" href="#app.get_field"><code class="docutils literal notranslate"><span class="pre">get_field()</span></code></a></li>
+<li><a class="reference internal" href="#app.get_fields"><code class="docutils literal notranslate"><span class="pre">get_fields()</span></code></a></li>
+<li><a class="reference internal" href="#app.get_recommendation_logic"><code class="docutils literal notranslate"><span class="pre">get_recommendation_logic()</span></code></a></li>
+<li><a class="reference internal" href="#app.get_session"><code class="docutils literal notranslate"><span class="pre">get_session()</span></code></a></li>
+<li><a class="reference internal" href="#app.handle_connect"><code class="docutils literal notranslate"><span class="pre">handle_connect()</span></code></a></li>
+<li><a class="reference internal" href="#app.handle_disconnect"><code class="docutils literal notranslate"><span class="pre">handle_disconnect()</span></code></a></li>
+<li><a class="reference internal" href="#app.index"><code class="docutils literal notranslate"><span class="pre">index()</span></code></a></li>
+<li><a class="reference internal" href="#app.login"><code class="docutils literal notranslate"><span class="pre">login()</span></code></a></li>
+<li><a class="reference internal" href="#app.logout"><code class="docutils literal notranslate"><span class="pre">logout()</span></code></a></li>
+<li><a class="reference internal" href="#app.send_weather_periodically"><code class="docutils literal notranslate"><span class="pre">send_weather_periodically()</span></code></a></li>
+<li><a class="reference internal" href="#app.socketio"><code class="docutils literal notranslate"><span class="pre">socketio</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/app.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">SmartSprout 1.0.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">app module</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, Daniel.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+  </body>
+</html>
