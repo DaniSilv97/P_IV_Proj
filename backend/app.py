@@ -5,7 +5,10 @@ import os
 import json
 import requests
 from dotenv import load_dotenv
+from threading import Thread
+import time
 load_dotenv()
+
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -13,7 +16,7 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your-secret-key-change-
 app.config['SESSION_TYPE'] = 'filesystem'
 
 # Enable CORS for React frontend at http://localhost:5173
-CORS(app, origins=["http://localhost:5173"], supports_credentials=True)
+CORS(app, origins=["http://localhost:5173"], supports_credentials=True, methods=["GET", "POST", "DELETE"])
 
 # Initialize SocketIO with CORS support for the React frontend
 socketio = SocketIO(
@@ -133,6 +136,160 @@ def get_fields():
     enriched_fields.append(field)
 
   return jsonify({"fields": enriched_fields})
+
+@app.route('/api/fields/<field_id>', methods=['DELETE'])
+def delete_field(field_id):
+  if not session.get('logged_in'):
+    return jsonify({"error": "Unauthorized"}), 401
+  
+  user_id = session.get('user_id')
+  if not user_id:
+    return jsonify({"error": "User ID not found in session"}), 401
+  if not field_id:
+    return jsonify({"error": "Field ID is required"}), 400
+  
+  print(f"Deleting field with ID: {field_id} for user ID: {user_id}")
+  try:
+    with open('./data/fields.json', 'r') as f:
+      fields_data = json.load(f)
+      fields = fields_data.get('fields', [])
+      updated_fields = [field for field in fields if not (field.get('field_id') == field_id and field.get('user_id') == user_id)]
+    with open('./data/fields.json', 'w') as f:
+      json.dump({"fields": updated_fields}, f, indent=2)
+    return jsonify({"message": "Field deleted successfully"})
+  except Exception as e:
+    print(f"Error deleting field: {e}")
+    return jsonify({"error": "Failed to delete field"}), 500    
+
+@app.route('/api/fields/create', methods=['POST'])
+def create_field():
+  if not session.get('logged_in'):
+    return jsonify({"error": "Unauthorized"}), 401
+  
+  user_id = session.get('user_id')
+  if not user_id:
+    return jsonify({"error": "User ID not found in session"}), 401
+  
+  data = request.get_json()
+  if not data or not data.get('name'):
+    return jsonify({"error": "Name required"}), 400
+  if not data.get('latitude') or not data.get('longitude'):
+    return jsonify({"error": "Latitude and longitude are required"}), 400
+  if not data.get('crop_id'):
+    return jsonify({"error": "Crop ID is required"}), 400
+
+  try:
+    with open('./data/fields.json', 'r') as f:
+      fields_data = json.load(f)
+      fields = fields_data.get('fields', [])
+      if fields:
+        last_id = max(int(field.get('field_id', 0)) for field in fields)
+      else:
+        last_id = 0
+  except Exception:
+    last_id = 0
+
+  new_field = {
+    "field_id": str(last_id + 1),
+    "name": data.get('name'),
+    "crop_id": str(data.get('crop_id', None)),
+    "user_id": user_id,
+    "latitude": data.get('latitude'),
+    "longitude": data.get('longitude')
+  }
+
+  try:
+    with open('./data/fields.json', 'r') as f:
+      fields_data = json.load(f)
+      fields = fields_data.get('fields', [])
+      fields.append(new_field)
+    with open('./data/fields.json', 'w') as f:
+      json.dump({"fields": fields}, f, indent=2)
+
+    # Add weather data to the newly created field
+    weather = {}
+    weather_api_key = os.environ.get('OPENWEATHER_API_KEY')
+    lat = new_field.get('latitude')
+    lon = new_field.get('longitude')
+    if weather_api_key and lat and lon:
+      try:
+        url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric&appid={weather_api_key}"
+        response = requests.get(url)
+        if response.ok:
+          data = response.json()
+          weather = {
+            "temperature": data.get("main", {}).get("temp"),
+            "description": data.get("weather", [{}])[0].get("description"),
+            "icon": data.get("weather", [{}])[0].get("icon"),
+            "humidity": data.get("main", {}).get("humidity"),
+          }
+      except Exception:
+        weather = {"error": "Failed to fetch weather"}
+
+    new_field["weather"] = weather
+
+    return jsonify({
+      "message": "Field created successfully",
+      "field": new_field
+    }), 201
+  except Exception as e:
+    return jsonify({"error": "Failed to create field"}), 500
+
+
+def send_weather_periodically(sid):
+  weather_api_key = os.environ.get('OPENWEATHER_API_KEY')
+  lat = 41.15788815839542
+  lon = -8.62913041410896
+
+  while sid in connected_users:
+    weather = {}
+    if weather_api_key:
+      try:
+        url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric&appid={weather_api_key}"
+        response = requests.get(url)
+        if response.ok:
+          data = response.json()
+          weather = {
+            "temperature": data.get("main", {}).get("temp"),
+            "description": data.get("weather", [{}])[0].get("description"),
+            "icon": data.get("weather", [{}])[0].get("icon"),
+            "humidity": data.get("main", {}).get("humidity"),
+            "city": data.get("name")
+          }
+        else:
+          weather = {"error": "Weather API error"}
+      except Exception as e:
+        weather = {"error": "Failed to fetch weather"}
+    socketio.emit('weather_update', weather, room=sid)
+    # For testing purposes, you can use a static weather object
+    # weather = {
+    #   "temperature": 20,
+    #   "description": 'broken clouds',
+    #   "icon": '04n',
+    #   "humidity": 94,
+    #   "city": 'Porto'
+    # }
+    socketio.emit('weather_update', weather, room=sid)
+    time.sleep(60)
+
+
+@socketio.on('connect')
+def handle_connect():
+    sid = request.sid
+    print(f'Client connected: {sid}')
+    connected_users[sid] = True
+    join_room(sid)
+    thread = Thread(target=send_weather_periodically, args=(sid,))
+    thread.daemon = True
+    thread.start()
+
+@socketio.on('disconnect')
+def handle_disconnect():
+  sid = request.sid
+  print(f'Client disconnected: {sid}')
+  if sid in connected_users:
+    del connected_users[sid]
+  leave_room(sid)
 
 
 if __name__ == '__main__':

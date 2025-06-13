@@ -29,6 +29,7 @@ function WeatherIcon ({ code }) {
   };
 
   return (
+    // <img src={`https://openweathermap.org/img/wn/${code}.png`} alt="Weather Icon" />
     <FontAwesomeIcon icon={iconMap[code] || faCloud} className="text-main-hover text-xl" />
   );
 }

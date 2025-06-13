@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-function EditCircularButton({onEdit}){
+function ViewCircularButton({onInspect}){
   return (
     <button
-      onClick={onEdit}
+      onClick={onInspect}
       className="w-8 h-8 bg-main hover:bg-main-hover rounded-full flex items-center justify-center shadow-md transition-colors"
       aria-label="Edit field"
     >
@@ -14,18 +14,18 @@ function EditCircularButton({onEdit}){
         viewBox="0 0 24 24" 
         fill="none" 
         stroke="white" 
-        strokeWidth="2"
+        strokeWidth="2" 
         strokeLinecap="round" 
         strokeLinejoin="round"
       >
-        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-        <path d="m18.5 2.5 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/>
+        <circle cx="12" cy="12" r="3"/>
       </svg>
     </button>
   )
 }
 
-EditCircularButton.propTypes = {
-  onEdit: PropTypes.func.isRequired,
+ViewCircularButton.propTypes = {
+  onInspect: PropTypes.func.isRequired,
 };
-export default EditCircularButton;
+export default ViewCircularButton;

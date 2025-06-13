@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import BaseButton from "../components/BaseButton";
 import { useAuth } from '../contexts/AuthContext';
+import WeatherDisplay from '../components/WeatherDisplay';
 
 function BaseLayout({ children, showRegister = false }) {
   const { user, setUser, checkedSession } = useAuth();
@@ -36,7 +37,6 @@ function BaseLayout({ children, showRegister = false }) {
           >
             Home
           </NavLink>
-
           {user && (
             <NavLink
               to="/fields"
@@ -48,7 +48,7 @@ function BaseLayout({ children, showRegister = false }) {
             </NavLink>
           )}
         </div>
-
+        <WeatherDisplay/>
         <div>
           {user ? (
             <BaseButton onClick={handleLogout}>

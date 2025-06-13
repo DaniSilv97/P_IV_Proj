@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function BaseLayout({ children, onClick }) {
+function BaseLayout({ children, className, onClick }) {
   return (
     <button 
       onClick={onClick}
-      className="
+      className={
+        `
         text-white 
         bg-main 
         hover:bg-main-hover 
@@ -19,7 +20,9 @@ function BaseLayout({ children, onClick }) {
         hover:translate-x-[0.1rem]
         hover:-translate-y-[0.1rem]
         hover:shadow-lg
-      ">
+        ${className || ''}
+      `
+      }>
       { children }
     </button>
   );
@@ -28,6 +31,7 @@ function BaseLayout({ children, onClick }) {
 BaseLayout.propTypes = {
   children: PropTypes.node,
   onClick: PropTypes.func,
+  className: PropTypes.string,
 };
 
 export default BaseLayout;
