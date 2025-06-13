@@ -1,3 +1,4 @@
+# region Imports and Setup
 from flask import Flask, request, session, jsonify
 from flask_socketio import SocketIO, emit, join_room, leave_room
 from flask_cors import CORS
@@ -10,16 +11,15 @@ import time
 from datetime import datetime
 from collections import defaultdict
 load_dotenv()
+# endregion
 
-#: Initialize Flask app
+# region Flask App Initialization
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your-secret-key-change-this')
 app.config['SESSION_TYPE'] = 'filesystem'
 
-#: Enable CORS for React frontend at http://localhost:5173
 CORS(app, origins=["http://localhost:5173"], supports_credentials=True, methods=["GET", "POST", "DELETE"])
 
-#: Initialize SocketIO with CORS support for the React frontend
 socketio = SocketIO(
   app,
   cors_allowed_origins="http://localhost:5173",
@@ -28,28 +28,23 @@ socketio = SocketIO(
   engineio_logger=True
 )
 
-#: Store connected users (for production, use Redis or a database)
 connected_users = {}
+# endregion
 
+# region Routes: General
 @app.route('/')
 def index():
     """
     Root endpoint to check if the Flask backend is running.
-
-    :return: JSON message indicating backend status.
     """
     return jsonify({"message": "Flask backend is running!", "status": "success"})
+# endregion
 
+# region Routes: Authentication
 @app.route('/api/login', methods=['POST'])
 def login():
     """
     Login endpoint for user authentication.
-
-    Expects JSON with 'email' and 'password'.
-    Loads users from JSON file and checks credentials.
-    Sets session data on successful login.
-
-    :return: JSON with user info or error.
     """
     data = request.get_json()
     email = data.get('email')
@@ -91,8 +86,6 @@ def login():
 def logout():
     """
     Logout endpoint to clear user session.
-
-    :return: JSON message indicating logout status.
     """
     user_id = session.get('user_id')
     if user_id and user_id in connected_users:
@@ -105,8 +98,6 @@ def logout():
 def get_session():
     """
     Get current session information.
-
-    :return: JSON with session status and user info.
     """
     if session.get('logged_in'):
         return jsonify({
@@ -116,13 +107,13 @@ def get_session():
         })
     else:
         return jsonify({"logged_in": False}), 401
+# endregion
 
+# region Routes: Fields CRUD and Weather
 @app.route('/api/fields', methods=['GET'])
 def get_fields():
     """
     Get all fields for the logged-in user, enriched with weather data.
-
-    :return: JSON list of fields with weather info.
     """
     if not session.get('logged_in'):
         return jsonify({"error": "Unauthorized"}), 401
@@ -171,9 +162,6 @@ def get_fields():
 def get_field(field_id):
     """
     Get a specific field by ID for the logged-in user, including weather forecast and crop recommendation.
-
-    :param field_id: ID of the field to retrieve.
-    :return: JSON with field data, weather, and recommendation.
     """
     if not session.get('logged_in'):
         return jsonify({"error": "Unauthorized"}), 401
@@ -239,16 +227,115 @@ def get_field(field_id):
     field = add_crop_recommendation_to_field(field)
     return jsonify({"field": field})
 
+@app.route('/api/fields/<field_id>', methods=['DELETE'])
+def delete_field(field_id):
+    """
+    Delete a field by ID for the logged-in user.
+    """
+    if not session.get('logged_in'):
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({"error": "User ID not found in session"}), 401
+    if not field_id:
+        return jsonify({"error": "Field ID is required"}), 400
+    
+    print(f"Deleting field with ID: {field_id} for user ID: {user_id}")
+    try:
+        with open('./data/fields.json', 'r') as f:
+            fields_data = json.load(f)
+            fields = fields_data.get('fields', [])
+            updated_fields = [field for field in fields if not (field.get('field_id') == field_id and field.get('user_id') == user_id)]
+        with open('./data/fields.json', 'w') as f:
+            json.dump({"fields": updated_fields}, f, indent=2)
+        return jsonify({"message": "Field deleted successfully"})
+    except Exception as e:
+        print(f"Error deleting field: {e}")
+        return jsonify({"error": "Failed to delete field"}), 500    
+
+@app.route('/api/fields/create', methods=['POST'])
+def create_field():
+    """
+    Create a new field for the logged-in user.
+    """
+    if not session.get('logged_in'):
+        return jsonify({"error": "Unauthorized"}), 401
+    
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({"error": "User ID not found in session"}), 401
+    
+    data = request.get_json()
+    if not data or not data.get('name'):
+        return jsonify({"error": "Name required"}), 400
+    if not data.get('latitude') or not data.get('longitude'):
+        return jsonify({"error": "Latitude and longitude are required"}), 400
+    if not data.get('crop_id'):
+        return jsonify({"error": "Crop ID is required"}), 400
+
+    try:
+        with open('./data/fields.json', 'r') as f:
+            fields_data = json.load(f)
+            fields = fields_data.get('fields', [])
+            if fields:
+                last_id = max(int(field.get('field_id', 0)) for field in fields)
+            else:
+                last_id = 0
+    except Exception:
+        last_id = 0
+
+    new_field = {
+        "field_id": str(last_id + 1),
+        "name": data.get('name'),
+        "crop_id": str(data.get('crop_id', None)),
+        "user_id": user_id,
+        "latitude": data.get('latitude'),
+        "longitude": data.get('longitude')
+    }
+
+    try:
+        with open('./data/fields.json', 'r') as f:
+            fields_data = json.load(f)
+            fields = fields_data.get('fields', [])
+            fields.append(new_field)
+        with open('./data/fields.json', 'w') as f:
+            json.dump({"fields": fields}, f, indent=2)
+
+        # Add weather data to the newly created field
+        weather = {}
+        weather_api_key = os.environ.get('OPENWEATHER_API_KEY')
+        lat = new_field.get('latitude')
+        lon = new_field.get('longitude')
+        if weather_api_key and lat and lon:
+            try:
+                url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric&appid={weather_api_key}"
+                response = requests.get(url)
+                if response.ok:
+                    data = response.json()
+                    weather = {
+                        "temperature": data.get("main", {}).get("temp"),
+                        "description": data.get("weather", [{}])[0].get("description"),
+                        "icon": data.get("weather", [{}])[0].get("icon"),
+                        "humidity": data.get("main", {}).get("humidity"),
+                    }
+            except Exception:
+                weather = {"error": "Failed to fetch weather"}
+
+        new_field["weather"] = weather
+
+        return jsonify({
+            "message": "Field created successfully",
+            "field": new_field
+        }), 201
+    except Exception as e:
+        return jsonify({"error": "Failed to create field"}), 500
+# endregion
+
+# region Crop Recommendation Logic
 def get_crop_recommendation(crop_id, weather_data):
     """
     Get crop recommendation based on crop type and weather forecast
-
-    Args:
-        crop_id (str): "1" for Wheat, "2" for Carrot, "3" for Basil, "4" for Spinach
-        weather_data (list): List of daily weather forecasts with segments
-
-    Returns:
-        dict: Recommendation with action and reasoning
     """
     # Crop mapping
     crop_types = {
@@ -277,9 +364,6 @@ def get_crop_recommendation(crop_id, weather_data):
 def analyze_weather_patterns(weather_data):
     """
     Analyze weather patterns from forecast data.
-
-    :param weather_data: List of daily weather forecasts with segments.
-    :return: Dictionary with average temperature, humidity, rain/hot/cold days, and total days.
     """
     total_temp = 0
     total_humidity = 0
@@ -335,11 +419,6 @@ def analyze_weather_patterns(weather_data):
 def get_recommendation_logic(crop_id, crop_name, weather_analysis):
     """
     Generate recommendation based on crop type and weather analysis.
-
-    :param crop_id: Crop ID as string.
-    :param crop_name: Name of the crop.
-    :param weather_analysis: Dictionary with weather analysis.
-    :return: Recommendation dictionary.
     """
     avg_temp = weather_analysis["avg_temperature"]
     avg_humidity = weather_analysis["avg_humidity"]
@@ -471,15 +550,7 @@ def get_recommendation_logic(crop_id, crop_name, weather_analysis):
 def add_crop_recommendation_to_field(field_data):
     """
     Add crop recommendation to field data.
-
-    Call this function in your get_field route after getting weather data.
-
-    :param field_data: Dictionary with field information.
-    :return: Field data with 'recommendation' key added.
     """
-    print('----------------------------')
-    print(field_data)
-    print('----------------------------')
     crop_id = field_data.get('crop_id')
     weather_data = field_data.get('weather', [])
     
@@ -494,123 +565,12 @@ def add_crop_recommendation_to_field(field_data):
         }
     
     return field_data
+# endregion
 
-@app.route('/api/fields/<field_id>', methods=['DELETE'])
-def delete_field(field_id):
-    """
-    Delete a field by ID for the logged-in user.
-
-    :param field_id: ID of the field to delete.
-    :return: JSON message indicating deletion status.
-    """
-    if not session.get('logged_in'):
-        return jsonify({"error": "Unauthorized"}), 401
-    
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({"error": "User ID not found in session"}), 401
-    if not field_id:
-        return jsonify({"error": "Field ID is required"}), 400
-    
-    print(f"Deleting field with ID: {field_id} for user ID: {user_id}")
-    try:
-        with open('./data/fields.json', 'r') as f:
-            fields_data = json.load(f)
-            fields = fields_data.get('fields', [])
-            updated_fields = [field for field in fields if not (field.get('field_id') == field_id and field.get('user_id') == user_id)]
-        with open('./data/fields.json', 'w') as f:
-            json.dump({"fields": updated_fields}, f, indent=2)
-        return jsonify({"message": "Field deleted successfully"})
-    except Exception as e:
-        print(f"Error deleting field: {e}")
-        return jsonify({"error": "Failed to delete field"}), 500    
-
-@app.route('/api/fields/create', methods=['POST'])
-def create_field():
-    """
-    Create a new field for the logged-in user.
-
-    Expects JSON with 'name', 'latitude', 'longitude', and 'crop_id'.
-
-    :return: JSON with created field data or error.
-    """
-    if not session.get('logged_in'):
-        return jsonify({"error": "Unauthorized"}), 401
-    
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({"error": "User ID not found in session"}), 401
-    
-    data = request.get_json()
-    if not data or not data.get('name'):
-        return jsonify({"error": "Name required"}), 400
-    if not data.get('latitude') or not data.get('longitude'):
-        return jsonify({"error": "Latitude and longitude are required"}), 400
-    if not data.get('crop_id'):
-        return jsonify({"error": "Crop ID is required"}), 400
-
-    try:
-        with open('./data/fields.json', 'r') as f:
-            fields_data = json.load(f)
-            fields = fields_data.get('fields', [])
-            if fields:
-                last_id = max(int(field.get('field_id', 0)) for field in fields)
-            else:
-                last_id = 0
-    except Exception:
-        last_id = 0
-
-    new_field = {
-        "field_id": str(last_id + 1),
-        "name": data.get('name'),
-        "crop_id": str(data.get('crop_id', None)),
-        "user_id": user_id,
-        "latitude": data.get('latitude'),
-        "longitude": data.get('longitude')
-    }
-
-    try:
-        with open('./data/fields.json', 'r') as f:
-            fields_data = json.load(f)
-            fields = fields_data.get('fields', [])
-            fields.append(new_field)
-        with open('./data/fields.json', 'w') as f:
-            json.dump({"fields": fields}, f, indent=2)
-
-        # Add weather data to the newly created field
-        weather = {}
-        weather_api_key = os.environ.get('OPENWEATHER_API_KEY')
-        lat = new_field.get('latitude')
-        lon = new_field.get('longitude')
-        if weather_api_key and lat and lon:
-            try:
-                url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric&appid={weather_api_key}"
-                response = requests.get(url)
-                if response.ok:
-                    data = response.json()
-                    weather = {
-                        "temperature": data.get("main", {}).get("temp"),
-                        "description": data.get("weather", [{}])[0].get("description"),
-                        "icon": data.get("weather", [{}])[0].get("icon"),
-                        "humidity": data.get("main", {}).get("humidity"),
-                    }
-            except Exception:
-                weather = {"error": "Failed to fetch weather"}
-
-        new_field["weather"] = weather
-
-        return jsonify({
-            "message": "Field created successfully",
-            "field": new_field
-        }), 201
-    except Exception as e:
-        return jsonify({"error": "Failed to create field"}), 500
-
+# region SocketIO: Weather Updates
 def send_weather_periodically(sid):
     """
     Periodically send weather updates to a connected SocketIO client.
-
-    :param sid: SocketIO session ID.
     """
     weather_api_key = os.environ.get('OPENWEATHER_API_KEY')
     lat = 41.15788815839542
@@ -653,9 +613,12 @@ def handle_disconnect():
     if sid in connected_users:
         del connected_users[sid]
     leave_room(sid)
+# endregion
 
+# region Main Entrypoint
 if __name__ == '__main__':
     """
     Run the Flask app with SocketIO support.
     """
     socketio.run(app, debug=True, host='0.0.0.0', port=5000, allow_unsafe_werkzeug=True)
+# endregion
