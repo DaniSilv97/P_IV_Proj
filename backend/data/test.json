@@ -1,46 +1,44 @@
 {
-  "fields": [
+  "coord": {
+    "lon": 109,
+    "lat": 14
+  },
+  "weather": [
     {
-      "crop_id": "1",
-      "field_id": 1,
-      "latitude": 40.7128,
-      "longitude": -74.006,
-      "name": "Field 1",
-      "user_id": "1",
-      "weather": {
-        "description": "clear sky",
-        "humidity": 44,
-        "icon": "01d",
-        "temperature": 30.98
-      }
-    },
-    {
-      "crop_id": "1",
-      "field_id": 2,
-      "latitude": 40.7128,
-      "longitude": -74.006,
-      "name": "Field 2",
-      "user_id": "1",
-      "weather": {
-        "description": "clear sky",
-        "humidity": 44,
-        "icon": "01d",
-        "temperature": 30.98
-      }
-    },
-    {
-      "crop_id": "1",
-      "field_id": 3,
-      "latitude": 40.7128,
-      "longitude": -74.006,
-      "name": "Field 3",
-      "user_id": "1",
-      "weather": {
-        "description": "clear sky",
-        "humidity": 44,
-        "icon": "01d",
-        "temperature": 30.98
-      }
+      "id": 804,
+      "main": "Clouds",
+      "description": "overcast clouds",
+      "icon": "04n"
     }
-  ]
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 27.22,
+    "feels_like": 29.42,
+    "temp_min": 27.22,
+    "temp_max": 27.22,
+    "pressure": 1006,
+    "humidity": 72,
+    "sea_level": 1006,
+    "grnd_level": 994
+  },
+  "visibility": 10000,
+  "wind": {
+    "speed": 4.6,
+    "deg": 236,
+    "gust": 11.95
+  },
+  "clouds": {
+    "all": 100
+  },
+  "dt": 1749818749,
+  "sys": {
+    "country": "VN",
+    "sunrise": 1749766548,
+    "sunset": 1749813143
+  },
+  "timezone": 25200,
+  "id": 1587871,
+  "name": "Tinh Binh GJinh",
+  "cod": 200
 }

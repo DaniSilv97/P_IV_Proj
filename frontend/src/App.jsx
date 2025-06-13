@@ -66,7 +66,6 @@ function App() {
           <ProtectedRoute>
             <MyField />
           </ProtectedRoute>
-          
         } />
       </Route>
     </Routes>

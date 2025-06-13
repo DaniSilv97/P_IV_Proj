@@ -7,6 +7,8 @@ import requests
 from dotenv import load_dotenv
 from threading import Thread
 import time
+from datetime import datetime
+from collections import defaultdict
 load_dotenv()
 
 
@@ -137,6 +139,74 @@ def get_fields():
 
   return jsonify({"fields": enriched_fields})
 
+@app.route('/api/fields/<field_id>', methods=['GET'])
+def get_field(field_id):
+  if not session.get('logged_in'):
+    return jsonify({"error": "Unauthorized"}), 401
+
+  user_id = session.get('user_id')
+  if not user_id:
+    return jsonify({"error": "User ID not found in session"}), 401
+
+  try:
+    with open('./data/fields.json', 'r') as f:
+      fields_data = json.load(f)
+      fields = fields_data.get('fields', [])
+  except Exception as e:
+    return jsonify({"error": "Failed to load fields data"}), 500
+
+  field = next((f for f in fields if f.get('field_id') == field_id and f.get('user_id') == user_id), None)
+
+  if not field:
+    return jsonify({"error": "Field not found"}), 404
+
+  weather_api_key = os.environ.get('OPENWEATHER_API_KEY')
+  lat = field.get('latitude')
+  lon = field.get('longitude')
+  weather = {}
+
+  if weather_api_key and lat and lon:
+    try:
+      weather_url = (f"https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&exclude=minutely,alerts&units=metric&appid={weather_api_key}")
+
+      response = requests.get(weather_url)
+      if response.ok:
+        data = response.json()
+
+        # Process forecast data into daily summaries
+        forecast_by_day = defaultdict(list)
+        for entry in data.get("list", []):
+          date_str = entry["dt_txt"].split(" ")[0]
+          forecast_by_day[date_str].append(entry)
+
+        daily = []
+        num_days = 5
+        for date, entries in list(forecast_by_day.items())[:num_days]:
+          segments = []
+          for e in entries:
+            segments.append({
+              "time": e["dt_txt"],
+              "temperature": e["main"]["temp"],
+              "description": e["weather"][0]["description"],
+              "icon": e["weather"][0]["icon"],
+              "humidity": e["main"]["humidity"]
+            })
+
+          daily.append({
+            "date": date,
+            "segments": segments
+          })
+
+        weather = daily
+
+    except Exception as e:
+      weather = {"error": "Failed to fetch weather forecast"}
+
+
+  field['weather'] = weather
+  return jsonify({"field": field})
+
+
 @app.route('/api/fields/<field_id>', methods=['DELETE'])
 def delete_field(field_id):
   if not session.get('logged_in'):
@@ -242,33 +312,33 @@ def send_weather_periodically(sid):
   lon = -8.62913041410896
 
   while sid in connected_users:
-    weather = {}
-    if weather_api_key:
-      try:
-        url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric&appid={weather_api_key}"
-        response = requests.get(url)
-        if response.ok:
-          data = response.json()
-          weather = {
-            "temperature": data.get("main", {}).get("temp"),
-            "description": data.get("weather", [{}])[0].get("description"),
-            "icon": data.get("weather", [{}])[0].get("icon"),
-            "humidity": data.get("main", {}).get("humidity"),
-            "city": data.get("name")
-          }
-        else:
-          weather = {"error": "Weather API error"}
-      except Exception as e:
-        weather = {"error": "Failed to fetch weather"}
-    socketio.emit('weather_update', weather, room=sid)
+    # weather = {}
+    # if weather_api_key:
+    #   try:
+    #     url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric&appid={weather_api_key}"
+    #     response = requests.get(url)
+    #     if response.ok:
+    #       data = response.json()
+    #       weather = {
+    #         "temperature": data.get("main", {}).get("temp"),
+    #         "description": data.get("weather", [{}])[0].get("description"),
+    #         "icon": data.get("weather", [{}])[0].get("icon"),
+    #         "humidity": data.get("main", {}).get("humidity"),
+    #         "city": data.get("name")
+    #       }
+    #     else:
+    #       weather = {"error": "Weather API error"}
+    #   except Exception as e:
+    #     weather = {"error": "Failed to fetch weather"}
+    # socketio.emit('weather_update', weather, room=sid)
     # For testing purposes, you can use a static weather object
-    # weather = {
-    #   "temperature": 20,
-    #   "description": 'broken clouds',
-    #   "icon": '04n',
-    #   "humidity": 94,
-    #   "city": 'Porto'
-    # }
+    weather = {
+      "temperature": 20,
+      "description": 'broken clouds',
+      "icon": '04n',
+      "humidity": 94,
+      "city": 'Porto'
+    }
     socketio.emit('weather_update', weather, room=sid)
     time.sleep(60)
 
