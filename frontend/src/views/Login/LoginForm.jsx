@@ -86,7 +86,6 @@ function LoginForm() {
 
   return (
     <div className="space-y-4">
-      {/* Email Field */}
       <div className="space-y-2">
         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
           Email
@@ -108,7 +107,6 @@ function LoginForm() {
         </div>
       </div>
 
-      {/* Password Field */}
       <div className="space-y-2">
         <label htmlFor="password" className="block text-sm font-medium text-gray-700">
           Password
@@ -141,7 +139,6 @@ function LoginForm() {
         </div>
       </div>
 
-      {/* Submit Button */}
       <button
         onClick={handleSubmit}
         className="w-full py-3 px-4 bg-gradient-to-r from-main to-secondary text-white font-medium rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-main focus:ring-offset-2 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
