@@ -9,8 +9,8 @@ A web application for managing agricultural fields with real-time weather data a
 ```
 /project-root
 │
-├── front/         # Frontend React application
-├── back/          # Backend Flask application
+├── frontend/         # Frontend React application
+├── backend/          # Backend Flask application
 ├── README.md
 ```
 
@@ -18,7 +18,7 @@ A web application for managing agricultural fields with real-time weather data a
 
 ## 🚀 Getting Started
 
-### 1. **Frontend Setup** (`/front`)
+### 1. **Frontend Setup** (`/frontend`)
 
 ```bash
 cd frontend
@@ -30,7 +30,7 @@ npm run dev
 
 ---
 
-### 2. **Backend Setup** (`/back`)
+### 2. **Backend Setup** (`/backend`)
 
 ```bash
 cd ..
@@ -46,7 +46,7 @@ python app.py
 
 ### 3. **Environment Variables**
 
-Copy the `.env.example` to `.env` file in the `back/` directory:
+Copy the `.env.example` to `.env` file in the `backend/` directory:
 
 ```
 OPENWEATHER_API_KEY=your_api_key_here
@@ -57,7 +57,7 @@ SECRET_KEY=your_secret_key_here
 
 ### 4. **Run Tests (Pytest)**
 
-From the `back/` directory:
+From the `backend/` directory:
 
 ```bash
 pytest
@@ -83,3 +83,6 @@ pytest
 * OpenWeather API key
 
 ---
+
+## Accounts
+* check `backend\data\users.json`
