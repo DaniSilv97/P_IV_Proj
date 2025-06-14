@@ -130,7 +130,7 @@ class DataAccess:
       self._save_fields(fields)
       return True
     except Exception:
-        return False
+      return False
   
   def update_field(self, field: Field) -> bool:
     """Update an existing field."""
@@ -143,7 +143,7 @@ class DataAccess:
           return True
       return False
     except Exception:
-        return False
+      return False
   
   def delete_field(self, field_id: str, user_id: str = None) -> bool:
     """Delete a field by ID, optionally restricted to a specific user."""
@@ -153,8 +153,7 @@ class DataAccess:
         # Only delete if field belongs to the user
         fields = [f for f in fields if not (f.field_id == field_id and f.user_id == user_id)]
       else:
-        # Delete any field with the given ID
-        fields = [f for f in fields if f.field_id != field_id]
+        return False
       
       self._save_fields(fields)
       return True
@@ -167,5 +166,4 @@ class DataAccess:
     with open(self.fields_file, 'w') as f:
       json.dump(data, f, indent=2)
 
-# Create a global instance for easy import
 data_access = DataAccess()
