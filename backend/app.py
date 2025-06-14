@@ -578,13 +578,32 @@ def send_weather_periodically(sid):
 
   while sid in connected_users:
     # For testing purposes, you can use a static weather object
-    weather = {
-      "temperature": 20,
-      "description": 'broken clouds',
-      "icon": '04n',
-      "humidity": 94,
-      "city": 'Porto'
-    }
+    # weather = {
+    #   "temperature": 20,
+    #   "description": 'broken clouds',
+    #   "icon": '04n',
+    #   "humidity": 94,
+    #   "city": 'Porto'
+    # }
+    weather = {}
+    if weather_api_key:
+      try:
+        url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=metric&appid={weather_api_key}"
+        response = requests.get(url)
+        if response.ok:
+          data = response.json()
+          weather = {
+            "temperature": data.get("main", {}).get("temp"),
+            "description": data.get("weather", [{}])[0].get("description"),
+            "icon": data.get("weather", [{}])[0].get("icon"),
+            "humidity": data.get("main", {}).get("humidity"),
+            "city": data.get("name")
+          }
+        else:
+          weather = {"error": "Weather API error"}
+      except Exception as e:
+        weather = {"error": "Failed to fetch weather"}
+
     socketio.emit('weather_update', weather, room=sid)
     time.sleep(60)
 
