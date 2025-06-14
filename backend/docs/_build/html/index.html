@@ -1,91 +1,540 @@
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-<html lang="en" data-content_root="./">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <title>SmartSprout documentation &#8212; SmartSprout 1.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=6625fa76" />
-    <link rel="stylesheet" type="text/css" href="_static/groundwork.css?v=594d7a89" />
-    <script src="_static/documentation_options.js?v=8d563738"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartSprout Documentation &mdash; SmartSprout 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=af2ce170"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
-  </head><body>
-    <div class="related" role="navigation" aria-label="Related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">SmartSprout 1.0.0 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">SmartSprout documentation</a></li> 
-      </ul>
-    </div>  
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="backend" href="modules.html" /> 
+</head>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
-  <section id="smartsprout-documentation">
-<h1>SmartSprout documentation<a class="headerlink" href="#smartsprout-documentation" title="Link to this heading">¶</a></h1>
-<p>Add your content using <code class="docutils literal notranslate"><span class="pre">reStructuredText</span></code> syntax. See the
-<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html">reStructuredText</a>
-documentation for details.</p>
-<div class="toctree-wrapper compound">
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            SmartSprout
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
 </div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">backend</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">SmartSprout</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">SmartSprout Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="smartsprout-documentation">
+<h1>SmartSprout Documentation<a class="headerlink" href="#smartsprout-documentation" title="Permalink to this heading"></a></h1>
+<p>Welcome to SmartSprout’s documentation! This is a Flask-based agricultural management system
+that helps farmers manage their fields, monitor weather conditions, and get crop recommendations.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">backend</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="app.html">app module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this heading"></a></h2>
+<p>SmartSprout is a web application that provides:</p>
+<ul class="simple">
+<li><p>User authentication and management</p></li>
+<li><p>Field management with GPS coordinates</p></li>
+<li><p>Real-time weather integration</p></li>
+<li><p>Crop-specific recommendations</p></li>
+<li><p>WebSocket support for live updates</p></li>
+</ul>
+</section>
+<section id="architecture-overview">
+<h2>Architecture Overview<a class="headerlink" href="#architecture-overview" title="Permalink to this heading"></a></h2>
+<p>The application is structured as follows:</p>
+<ul class="simple">
+<li><p><strong>Models</strong>: Data models for users and fields</p></li>
+<li><p><strong>Services</strong>: Business logic for weather and crop recommendations</p></li>
+<li><p><strong>Routes</strong>: API endpoints organized by functionality</p></li>
+<li><p><strong>Data Access</strong>: JSON file-based data persistence</p></li>
+</ul>
+</section>
+</section>
+<section id="main-components">
+<h1>Main Components<a class="headerlink" href="#main-components" title="Permalink to this heading"></a></h1>
+<section id="module-models.user">
+<span id="models"></span><h2>Models<a class="headerlink" href="#module-models.user" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="models.user.User">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.user.</span></span><span class="sig-name descname"><span class="pre">User</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/user.html#User"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.user.User" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>User model for representing user data.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.user.User.user_id">
+<span class="sig-name descname"><span class="pre">user_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#models.user.User.user_id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.user.User.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#models.user.User.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.user.User.surname">
+<span class="sig-name descname"><span class="pre">surname</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#models.user.User.surname" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.user.User.email">
+<span class="sig-name descname"><span class="pre">email</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#models.user.User.email" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.user.User.password">
+<span class="sig-name descname"><span class="pre">password</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#models.user.User.password" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.user.User.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#models.user.User" title="models.user.User"><span class="pre">User</span></a></span></span><a class="reference internal" href="_modules/models/user.html#User.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.user.User.from_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Create a User instance from a dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.user.User.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/models/user.html#User.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.user.User.to_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Convert User instance to dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.user.User.to_safe_dict">
+<span class="sig-name descname"><span class="pre">to_safe_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/models/user.html#User.to_safe_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.user.User.to_safe_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Convert User instance to dictionary without password.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.user.User.validate_password">
+<span class="sig-name descname"><span class="pre">validate_password</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/models/user.html#User.validate_password"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.user.User.validate_password" title="Permalink to this definition"></a></dt>
+<dd><p>Validate password against stored password.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.user.User.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">surname</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#models.user.User.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-models.field"></span><dl class="py class">
+<dt class="sig sig-object py" id="models.field.Field">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.field.</span></span><span class="sig-name descname"><span class="pre">Field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weather</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recommendation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/field.html#Field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.field.Field" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Field model for representing field data.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.field.Field.field_id">
+<span class="sig-name descname"><span class="pre">field_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#models.field.Field.field_id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.field.Field.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#models.field.Field.name" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.field.Field.crop_id">
+<span class="sig-name descname"><span class="pre">crop_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#models.field.Field.crop_id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.field.Field.user_id">
+<span class="sig-name descname"><span class="pre">user_id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#models.field.Field.user_id" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.field.Field.latitude">
+<span class="sig-name descname"><span class="pre">latitude</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#models.field.Field.latitude" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.field.Field.longitude">
+<span class="sig-name descname"><span class="pre">longitude</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#models.field.Field.longitude" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.field.Field.weather">
+<span class="sig-name descname"><span class="pre">weather</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#models.field.Field.weather" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.field.Field.recommendation">
+<span class="sig-name descname"><span class="pre">recommendation</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#models.field.Field.recommendation" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.field.Field.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#models.field.Field" title="models.field.Field"><span class="pre">Field</span></a></span></span><a class="reference internal" href="_modules/models/field.html#Field.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.field.Field.from_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Create a Field instance from a dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.field.Field.to_dict">
+<span class="sig-name descname"><span class="pre">to_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/models/field.html#Field.to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.field.Field.to_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Convert Field instance to dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.field.Field.to_storage_dict">
+<span class="sig-name descname"><span class="pre">to_storage_dict</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="_modules/models/field.html#Field.to_storage_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.field.Field.to_storage_dict" title="Permalink to this definition"></a></dt>
+<dd><p>Convert Field instance to dictionary for storage (without weather/recommendation).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.field.Field.get_coordinates">
+<span class="sig-name descname"><span class="pre">get_coordinates</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="reference internal" href="_modules/models/field.html#Field.get_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.field.Field.get_coordinates" title="Permalink to this definition"></a></dt>
+<dd><p>Get latitude and longitude as a tuple.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.field.Field.get_crop_name">
+<span class="sig-name descname"><span class="pre">get_crop_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/models/field.html#Field.get_crop_name"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.field.Field.get_crop_name" title="Permalink to this definition"></a></dt>
+<dd><p>Get the crop name based on crop_id.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.field.Field.set_weather">
+<span class="sig-name descname"><span class="pre">set_weather</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weather_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/models/field.html#Field.set_weather"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.field.Field.set_weather" title="Permalink to this definition"></a></dt>
+<dd><p>Set weather data for the field.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.field.Field.set_recommendation">
+<span class="sig-name descname"><span class="pre">set_recommendation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recommendation_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/models/field.html#Field.set_recommendation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.field.Field.set_recommendation" title="Permalink to this definition"></a></dt>
+<dd><p>Set recommendation data for the field.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.field.Field.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weather</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recommendation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#models.field.Field.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-services.weather_service">
+<span id="services"></span><h2>Services<a class="headerlink" href="#module-services.weather_service" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="services.weather_service.get_current_weather">
+<span class="sig-prename descclassname"><span class="pre">services.weather_service.</span></span><span class="sig-name descname"><span class="pre">get_current_weather</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/services/weather_service.html#get_current_weather"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.weather_service.get_current_weather" title="Permalink to this definition"></a></dt>
+<dd><p>Get current weather for given coordinates.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="services.weather_service.get_weather_forecast">
+<span class="sig-prename descclassname"><span class="pre">services.weather_service.</span></span><span class="sig-name descname"><span class="pre">get_weather_forecast</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/services/weather_service.html#get_weather_forecast"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.weather_service.get_weather_forecast" title="Permalink to this definition"></a></dt>
+<dd><p>Get weather forecast for given coordinates.</p>
+</dd></dl>
+
+<span class="target" id="module-services.crop_service"></span><dl class="py function">
+<dt class="sig sig-object py" id="services.crop_service.get_crop_recommendation">
+<span class="sig-prename descclassname"><span class="pre">services.crop_service.</span></span><span class="sig-name descname"><span class="pre">get_crop_recommendation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crop_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weather_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/services/crop_service.html#get_crop_recommendation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.crop_service.get_crop_recommendation" title="Permalink to this definition"></a></dt>
+<dd><p>Get crop recommendation based on crop type and weather forecast.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="services.crop_service.analyze_weather_patterns">
+<span class="sig-prename descclassname"><span class="pre">services.crop_service.</span></span><span class="sig-name descname"><span class="pre">analyze_weather_patterns</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weather_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/services/crop_service.html#analyze_weather_patterns"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.crop_service.analyze_weather_patterns" title="Permalink to this definition"></a></dt>
+<dd><p>Analyze weather patterns from forecast data.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="services.crop_service.get_recommendation_logic">
+<span class="sig-prename descclassname"><span class="pre">services.crop_service.</span></span><span class="sig-name descname"><span class="pre">get_recommendation_logic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crop_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weather_analysis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/services/crop_service.html#get_recommendation_logic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.crop_service.get_recommendation_logic" title="Permalink to this definition"></a></dt>
+<dd><p>Generate recommendation based on crop type and weather analysis.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="services.crop_service.add_crop_recommendation_to_field">
+<span class="sig-prename descclassname"><span class="pre">services.crop_service.</span></span><span class="sig-name descname"><span class="pre">add_crop_recommendation_to_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/services/crop_service.html#add_crop_recommendation_to_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#services.crop_service.add_crop_recommendation_to_field" title="Permalink to this definition"></a></dt>
+<dd><p>Add crop recommendation to field data.</p>
+</dd></dl>
+
+</section>
+<section id="module-data.data_access">
+<span id="data-access"></span><h2>Data Access<a class="headerlink" href="#module-data.data_access" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="data.data_access.DataAccess">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">data.data_access.</span></span><span class="sig-name descname"><span class="pre">DataAccess</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'./data'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data/data_access.html#DataAccess"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.data_access.DataAccess" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Data access layer for handling JSON file operations.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="data.data_access.DataAccess.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'./data'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/data/data_access.html#DataAccess.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.data_access.DataAccess.__init__" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data.data_access.DataAccess.get_all_users">
+<span class="sig-name descname"><span class="pre">get_all_users</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#models.user.User" title="models.user.User"><span class="pre">User</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/data/data_access.html#DataAccess.get_all_users"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.data_access.DataAccess.get_all_users" title="Permalink to this definition"></a></dt>
+<dd><p>Get all users from the JSON file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data.data_access.DataAccess.get_user_by_id">
+<span class="sig-name descname"><span class="pre">get_user_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#models.user.User" title="models.user.User"><span class="pre">User</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/data/data_access.html#DataAccess.get_user_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.data_access.DataAccess.get_user_by_id" title="Permalink to this definition"></a></dt>
+<dd><p>Get a user by their ID.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data.data_access.DataAccess.get_user_by_email">
+<span class="sig-name descname"><span class="pre">get_user_by_email</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">email</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#models.user.User" title="models.user.User"><span class="pre">User</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/data/data_access.html#DataAccess.get_user_by_email"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.data_access.DataAccess.get_user_by_email" title="Permalink to this definition"></a></dt>
+<dd><p>Get a user by their email address.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data.data_access.DataAccess.create_user">
+<span class="sig-name descname"><span class="pre">create_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#models.user.User" title="models.user.User"><span class="pre">User</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/data/data_access.html#DataAccess.create_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.data_access.DataAccess.create_user" title="Permalink to this definition"></a></dt>
+<dd><p>Create a new user.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data.data_access.DataAccess.update_user">
+<span class="sig-name descname"><span class="pre">update_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#models.user.User" title="models.user.User"><span class="pre">User</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/data/data_access.html#DataAccess.update_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.data_access.DataAccess.update_user" title="Permalink to this definition"></a></dt>
+<dd><p>Update an existing user.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data.data_access.DataAccess.delete_user">
+<span class="sig-name descname"><span class="pre">delete_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/data/data_access.html#DataAccess.delete_user"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.data_access.DataAccess.delete_user" title="Permalink to this definition"></a></dt>
+<dd><p>Delete a user by ID.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data.data_access.DataAccess.get_all_fields">
+<span class="sig-name descname"><span class="pre">get_all_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#models.field.Field" title="models.field.Field"><span class="pre">Field</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/data/data_access.html#DataAccess.get_all_fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.data_access.DataAccess.get_all_fields" title="Permalink to this definition"></a></dt>
+<dd><p>Get all fields from the JSON file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data.data_access.DataAccess.get_field_by_id">
+<span class="sig-name descname"><span class="pre">get_field_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#models.field.Field" title="models.field.Field"><span class="pre">Field</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/data/data_access.html#DataAccess.get_field_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.data_access.DataAccess.get_field_by_id" title="Permalink to this definition"></a></dt>
+<dd><p>Get a field by its ID.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data.data_access.DataAccess.get_fields_by_user_id">
+<span class="sig-name descname"><span class="pre">get_fields_by_user_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#models.field.Field" title="models.field.Field"><span class="pre">Field</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/data/data_access.html#DataAccess.get_fields_by_user_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.data_access.DataAccess.get_fields_by_user_id" title="Permalink to this definition"></a></dt>
+<dd><p>Get all fields belonging to a specific user.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data.data_access.DataAccess.get_user_field_by_id">
+<span class="sig-name descname"><span class="pre">get_user_field_by_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#models.field.Field" title="models.field.Field"><span class="pre">Field</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/data/data_access.html#DataAccess.get_user_field_by_id"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.data_access.DataAccess.get_user_field_by_id" title="Permalink to this definition"></a></dt>
+<dd><p>Get a field by ID that belongs to a specific user.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data.data_access.DataAccess.create_field">
+<span class="sig-name descname"><span class="pre">create_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#models.field.Field" title="models.field.Field"><span class="pre">Field</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/data/data_access.html#DataAccess.create_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.data_access.DataAccess.create_field" title="Permalink to this definition"></a></dt>
+<dd><p>Create a new field.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data.data_access.DataAccess.update_field">
+<span class="sig-name descname"><span class="pre">update_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#models.field.Field" title="models.field.Field"><span class="pre">Field</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/data/data_access.html#DataAccess.update_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.data_access.DataAccess.update_field" title="Permalink to this definition"></a></dt>
+<dd><p>Update an existing field.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="data.data_access.DataAccess.delete_field">
+<span class="sig-name descname"><span class="pre">delete_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/data/data_access.html#DataAccess.delete_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#data.data_access.DataAccess.delete_field" title="Permalink to this definition"></a></dt>
+<dd><p>Delete a field by ID, optionally restricted to a specific user.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="routes">
+<h2>Routes<a class="headerlink" href="#routes" title="Permalink to this heading"></a></h2>
+<section id="authentication-routes">
+<h3>Authentication Routes<a class="headerlink" href="#authentication-routes" title="Permalink to this heading"></a></h3>
+<span class="target" id="module-routes.auth"></span><dl class="py function">
+<dt class="sig sig-object py" id="routes.auth.login">
+<span class="sig-prename descclassname"><span class="pre">routes.auth.</span></span><span class="sig-name descname"><span class="pre">login</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/routes/auth.html#login"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#routes.auth.login" title="Permalink to this definition"></a></dt>
+<dd><p>Login endpoint for user authentication.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="routes.auth.logout">
+<span class="sig-prename descclassname"><span class="pre">routes.auth.</span></span><span class="sig-name descname"><span class="pre">logout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/routes/auth.html#logout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#routes.auth.logout" title="Permalink to this definition"></a></dt>
+<dd><p>Logout endpoint to clear user session.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="routes.auth.get_session">
+<span class="sig-prename descclassname"><span class="pre">routes.auth.</span></span><span class="sig-name descname"><span class="pre">get_session</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/routes/auth.html#get_session"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#routes.auth.get_session" title="Permalink to this definition"></a></dt>
+<dd><p>Get current session information.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="routes.auth.register">
+<span class="sig-prename descclassname"><span class="pre">routes.auth.</span></span><span class="sig-name descname"><span class="pre">register</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/routes/auth.html#register"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#routes.auth.register" title="Permalink to this definition"></a></dt>
+<dd><p>Register a new user.</p>
+</dd></dl>
+
+</section>
+<section id="fields-routes">
+<h3>Fields Routes<a class="headerlink" href="#fields-routes" title="Permalink to this heading"></a></h3>
+<span class="target" id="module-routes.fields"></span><dl class="py function">
+<dt class="sig sig-object py" id="routes.fields.get_fields">
+<span class="sig-prename descclassname"><span class="pre">routes.fields.</span></span><span class="sig-name descname"><span class="pre">get_fields</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/routes/fields.html#get_fields"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#routes.fields.get_fields" title="Permalink to this definition"></a></dt>
+<dd><p>Get all fields for the logged-in user, enriched with weather data.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="routes.fields.get_field">
+<span class="sig-prename descclassname"><span class="pre">routes.fields.</span></span><span class="sig-name descname"><span class="pre">get_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/routes/fields.html#get_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#routes.fields.get_field" title="Permalink to this definition"></a></dt>
+<dd><p>Get a specific field by ID for the logged-in user, including weather forecast and crop recommendation.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="routes.fields.delete_field">
+<span class="sig-prename descclassname"><span class="pre">routes.fields.</span></span><span class="sig-name descname"><span class="pre">delete_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/routes/fields.html#delete_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#routes.fields.delete_field" title="Permalink to this definition"></a></dt>
+<dd><p>Delete a field by ID for the logged-in user.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="routes.fields.create_field">
+<span class="sig-prename descclassname"><span class="pre">routes.fields.</span></span><span class="sig-name descname"><span class="pre">create_field</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/routes/fields.html#create_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#routes.fields.create_field" title="Permalink to this definition"></a></dt>
+<dd><p>Create a new field for the logged-in user.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="routes.fields.update_field">
+<span class="sig-prename descclassname"><span class="pre">routes.fields.</span></span><span class="sig-name descname"><span class="pre">update_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/routes/fields.html#update_field"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#routes.fields.update_field" title="Permalink to this definition"></a></dt>
+<dd><p>Update a field for the logged-in user.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="websocket-handlers">
+<h2>WebSocket Handlers<a class="headerlink" href="#websocket-handlers" title="Permalink to this heading"></a></h2>
+<span class="target" id="module-socketio_handlers"></span><dl class="py function">
+<dt class="sig sig-object py" id="socketio_handlers.register_socketio_handlers">
+<span class="sig-prename descclassname"><span class="pre">socketio_handlers.</span></span><span class="sig-name descname"><span class="pre">register_socketio_handlers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">socketio</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/socketio_handlers.html#register_socketio_handlers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#socketio_handlers.register_socketio_handlers" title="Permalink to this definition"></a></dt>
+<dd><p>Register all SocketIO event handlers.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="socketio_handlers.send_weather_periodically">
+<span class="sig-prename descclassname"><span class="pre">socketio_handlers.</span></span><span class="sig-name descname"><span class="pre">send_weather_periodically</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sid</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">socketio</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/socketio_handlers.html#send_weather_periodically"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#socketio_handlers.send_weather_periodically" title="Permalink to this definition"></a></dt>
+<dd><p>Periodically send weather updates to a connected SocketIO client.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="api-endpoints">
+<h1>API Endpoints<a class="headerlink" href="#api-endpoints" title="Permalink to this heading"></a></h1>
+<section id="authentication-endpoints">
+<h2>Authentication Endpoints<a class="headerlink" href="#authentication-endpoints" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/login</span></code> - User login</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/logout</span></code> - User logout</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/register</span></code> - User registration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/session</span></code> - Get current session</p></li>
+</ul>
+</section>
+<section id="fields-endpoints">
+<h2>Fields Endpoints<a class="headerlink" href="#fields-endpoints" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/fields</span></code> - Get all user fields</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/api/fields/&lt;field_id&gt;</span></code> - Get specific field with forecast</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/api/fields/create</span></code> - Create new field</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">PUT</span> <span class="pre">/api/fields/&lt;field_id&gt;</span></code> - Update field</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DELETE</span> <span class="pre">/api/fields/&lt;field_id&gt;</span></code> - Delete field</p></li>
+</ul>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading"></a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
 </section>
 
 
-            <div class="clearer"></div>
+           </div>
           </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-right" title="backend" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Daniel.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="Main">
-        <div class="sphinxsidebarwrapper">
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/index.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
-<search id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="Related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="#">SmartSprout 1.0.0 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">SmartSprout documentation</a></li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-    &#169; Copyright 2025, Daniel.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
-    </div>
-  </body>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
 </html>

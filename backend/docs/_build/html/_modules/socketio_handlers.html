@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>socketio_handlers &mdash; SmartSprout 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=af2ce170"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            SmartSprout
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">backend</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">SmartSprout</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">socketio_handlers</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for socketio_handlers</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">request</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask_socketio</span><span class="w"> </span><span class="kn">import</span> <span class="n">emit</span><span class="p">,</span> <span class="n">join_room</span><span class="p">,</span> <span class="n">leave_room</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">threading</span><span class="w"> </span><span class="kn">import</span> <span class="n">Thread</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="c1"># Global variable to track connected users</span>
+<span class="n">connected_users</span> <span class="o">=</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="register_socketio_handlers"><a class="viewcode-back" href="../index.html#socketio_handlers.register_socketio_handlers">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">register_socketio_handlers</span><span class="p">(</span><span class="n">socketio</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Register all SocketIO event handlers.&quot;&quot;&quot;</span>
+  
+  <span class="nd">@socketio</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;connect&#39;</span><span class="p">)</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">handle_connect</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle new SocketIO client connection. Starts a thread to send weather updates periodically.&quot;&quot;&quot;</span>
+    <span class="n">sid</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">sid</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Client connected: </span><span class="si">{</span><span class="n">sid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">connected_users</span><span class="p">[</span><span class="n">sid</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">join_room</span><span class="p">(</span><span class="n">sid</span><span class="p">)</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">send_weather_periodically</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">sid</span><span class="p">,</span> <span class="n">socketio</span><span class="p">))</span>
+    <span class="n">thread</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+  <span class="nd">@socketio</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;disconnect&#39;</span><span class="p">)</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">handle_disconnect</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle SocketIO client disconnection. Removes user from connected users.&quot;&quot;&quot;</span>
+    <span class="n">sid</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">sid</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Client disconnected: </span><span class="si">{</span><span class="n">sid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">sid</span> <span class="ow">in</span> <span class="n">connected_users</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">connected_users</span><span class="p">[</span><span class="n">sid</span><span class="p">]</span>
+    <span class="n">leave_room</span><span class="p">(</span><span class="n">sid</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="send_weather_periodically"><a class="viewcode-back" href="../index.html#socketio_handlers.send_weather_periodically">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">send_weather_periodically</span><span class="p">(</span><span class="n">sid</span><span class="p">,</span> <span class="n">socketio</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Periodically send weather updates to a connected SocketIO client.&quot;&quot;&quot;</span>
+  <span class="n">weather_api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;OPENWEATHER_API_KEY&#39;</span><span class="p">)</span>
+  <span class="n">lat</span> <span class="o">=</span> <span class="mf">41.15788815839542</span>
+  <span class="n">lon</span> <span class="o">=</span> <span class="o">-</span><span class="mf">8.62913041410896</span>
+
+  <span class="k">while</span> <span class="n">sid</span> <span class="ow">in</span> <span class="n">connected_users</span><span class="p">:</span>
+    <span class="n">weather</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="c1"># if weather_api_key:</span>
+    <span class="c1">#   try:</span>
+    <span class="c1">#     url = f&quot;https://api.openweathermap.org/data/2.5/weather?lat={lat}&amp;lon={lon}&amp;units=metric&amp;appid={weather_api_key}&quot;</span>
+    <span class="c1">#     response = requests.get(url)</span>
+    <span class="c1">#     if response.ok:</span>
+    <span class="c1">#       data = response.json()</span>
+    <span class="c1">#       weather = {</span>
+    <span class="c1">#         &quot;temperature&quot;: data.get(&quot;main&quot;, {}).get(&quot;temp&quot;),</span>
+    <span class="c1">#         &quot;description&quot;: data.get(&quot;weather&quot;, [{}])[0].get(&quot;description&quot;),</span>
+    <span class="c1">#         &quot;icon&quot;: data.get(&quot;weather&quot;, [{}])[0].get(&quot;icon&quot;),</span>
+    <span class="c1">#         &quot;humidity&quot;: data.get(&quot;main&quot;, {}).get(&quot;humidity&quot;),</span>
+    <span class="c1">#         &quot;city&quot;: data.get(&quot;name&quot;)</span>
+    <span class="c1">#       }</span>
+    <span class="c1">#     else:</span>
+    <span class="c1">#       weather = {&quot;error&quot;: &quot;Weather API error&quot;}</span>
+    <span class="c1">#   except Exception as e:</span>
+    <span class="c1">#     weather = {&quot;error&quot;: &quot;Failed to fetch weather&quot;}</span>
+    <span class="c1"># socketio.emit(&#39;weather_update&#39;, weather, room=sid)</span>
+    
+    <span class="c1"># For testing purposes, you can use a static weather object</span>
+    <span class="n">weather</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+      <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s1">&#39;broken clouds&#39;</span><span class="p">,</span>
+      <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s1">&#39;04n&#39;</span><span class="p">,</span>
+      <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="mi">94</span><span class="p">,</span>
+      <span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="s1">&#39;Porto&#39;</span>
+    <span class="p">}</span>
+    <span class="n">socketio</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s1">&#39;weather_update&#39;</span><span class="p">,</span> <span class="n">weather</span><span class="p">,</span> <span class="n">room</span><span class="o">=</span><span class="n">sid</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Daniel.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

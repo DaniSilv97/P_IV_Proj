@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>services.crop_service &mdash; SmartSprout 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=af2ce170"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            SmartSprout
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">backend</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SmartSprout</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">services.crop_service</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for services.crop_service</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="get_crop_recommendation"><a class="viewcode-back" href="../../index.html#services.crop_service.get_crop_recommendation">[docs]</a><span></span><span class="k">def</span><span class="w"> </span><span class="nf">get_crop_recommendation</span><span class="p">(</span><span class="n">crop_id</span><span class="p">,</span> <span class="n">weather_data</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Get crop recommendation based on crop type and weather forecast.&quot;&quot;&quot;</span>
+  <span class="c1"># Crop mapping</span>
+  <span class="n">crop_types</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;1&quot;</span><span class="p">:</span> <span class="s2">&quot;Wheat&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;2&quot;</span><span class="p">:</span> <span class="s2">&quot;Carrot&quot;</span><span class="p">,</span> 
+    <span class="s2">&quot;3&quot;</span><span class="p">:</span> <span class="s2">&quot;Basil&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;4&quot;</span><span class="p">:</span> <span class="s2">&quot;Spinach&quot;</span>
+  <span class="p">}</span>
+  
+  <span class="k">if</span> <span class="n">crop_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">crop_types</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid crop ID&quot;</span><span class="p">}</span>
+  
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">weather_data</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">weather_data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;error&quot;</span> <span class="ow">in</span> <span class="n">weather_data</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Weather data unavailable&quot;</span><span class="p">}</span>
+  
+  <span class="n">crop_name</span> <span class="o">=</span> <span class="n">crop_types</span><span class="p">[</span><span class="n">crop_id</span><span class="p">]</span>
+  
+  <span class="c1"># Analyze weather patterns over next few days</span>
+  <span class="n">weather_analysis</span> <span class="o">=</span> <span class="n">analyze_weather_patterns</span><span class="p">(</span><span class="n">weather_data</span><span class="p">)</span>
+  
+  <span class="c1"># Get recommendation based on crop type and weather</span>
+  <span class="n">recommendation</span> <span class="o">=</span> <span class="n">get_recommendation_logic</span><span class="p">(</span><span class="n">crop_id</span><span class="p">,</span> <span class="n">crop_name</span><span class="p">,</span> <span class="n">weather_analysis</span><span class="p">)</span>
+  
+  <span class="k">return</span> <span class="n">recommendation</span></div>
+
+<div class="viewcode-block" id="analyze_weather_patterns"><a class="viewcode-back" href="../../index.html#services.crop_service.analyze_weather_patterns">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">analyze_weather_patterns</span><span class="p">(</span><span class="n">weather_data</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Analyze weather patterns from forecast data.&quot;&quot;&quot;</span>
+  <span class="n">total_temp</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">total_humidity</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">temp_count</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">humidity_count</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">rain_days</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">hot_days</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="n">cold_days</span> <span class="o">=</span> <span class="mi">0</span>
+  
+  <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">weather_data</span><span class="p">:</span>
+    <span class="n">daily_temps</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">daily_humidity</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">has_rain</span> <span class="o">=</span> <span class="kc">False</span>
+    
+    <span class="k">for</span> <span class="n">segment</span> <span class="ow">in</span> <span class="n">day</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;segments&quot;</span><span class="p">,</span> <span class="p">[]):</span>
+      <span class="n">temp</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;temperature&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="n">humidity</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;humidity&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="n">description</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+      
+      <span class="n">daily_temps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+      <span class="n">daily_humidity</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">humidity</span><span class="p">)</span>
+      
+      <span class="c1"># Check for rain indicators</span>
+      <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">word</span> <span class="ow">in</span> <span class="n">description</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;rain&quot;</span><span class="p">,</span> <span class="s2">&quot;drizzle&quot;</span><span class="p">,</span> <span class="s2">&quot;shower&quot;</span><span class="p">,</span> <span class="s2">&quot;storm&quot;</span><span class="p">]):</span>
+        <span class="n">has_rain</span> <span class="o">=</span> <span class="kc">True</span>
+    
+    <span class="k">if</span> <span class="n">daily_temps</span><span class="p">:</span>
+      <span class="n">avg_daily_temp</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">daily_temps</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">daily_temps</span><span class="p">)</span>
+      <span class="n">avg_daily_humidity</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">daily_humidity</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">daily_humidity</span><span class="p">)</span>
+      
+      <span class="n">total_temp</span> <span class="o">+=</span> <span class="n">avg_daily_temp</span>
+      <span class="n">total_humidity</span> <span class="o">+=</span> <span class="n">avg_daily_humidity</span>
+      <span class="n">temp_count</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="n">humidity_count</span> <span class="o">+=</span> <span class="mi">1</span>
+      
+      <span class="k">if</span> <span class="n">avg_daily_temp</span> <span class="o">&gt;</span> <span class="mi">25</span><span class="p">:</span>  <span class="c1"># Hot day</span>
+        <span class="n">hot_days</span> <span class="o">+=</span> <span class="mi">1</span>
+      <span class="k">elif</span> <span class="n">avg_daily_temp</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>  <span class="c1"># Cold day</span>
+        <span class="n">cold_days</span> <span class="o">+=</span> <span class="mi">1</span>
+          
+      <span class="k">if</span> <span class="n">has_rain</span><span class="p">:</span>
+        <span class="n">rain_days</span> <span class="o">+=</span> <span class="mi">1</span>
+  
+  <span class="k">return</span> <span class="p">{</span>
+    <span class="s2">&quot;avg_temperature&quot;</span><span class="p">:</span> <span class="n">total_temp</span> <span class="o">/</span> <span class="n">temp_count</span> <span class="k">if</span> <span class="n">temp_count</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;avg_humidity&quot;</span><span class="p">:</span> <span class="n">total_humidity</span> <span class="o">/</span> <span class="n">humidity_count</span> <span class="k">if</span> <span class="n">humidity_count</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s2">&quot;rain_days&quot;</span><span class="p">:</span> <span class="n">rain_days</span><span class="p">,</span>
+    <span class="s2">&quot;hot_days&quot;</span><span class="p">:</span> <span class="n">hot_days</span><span class="p">,</span>
+    <span class="s2">&quot;cold_days&quot;</span><span class="p">:</span> <span class="n">cold_days</span><span class="p">,</span>
+    <span class="s2">&quot;total_days&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">weather_data</span><span class="p">)</span>
+  <span class="p">}</span></div>
+
+<div class="viewcode-block" id="get_recommendation_logic"><a class="viewcode-back" href="../../index.html#services.crop_service.get_recommendation_logic">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">get_recommendation_logic</span><span class="p">(</span><span class="n">crop_id</span><span class="p">,</span> <span class="n">crop_name</span><span class="p">,</span> <span class="n">weather_analysis</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Generate recommendation based on crop type and weather analysis.&quot;&quot;&quot;</span>
+  <span class="n">avg_temp</span> <span class="o">=</span> <span class="n">weather_analysis</span><span class="p">[</span><span class="s2">&quot;avg_temperature&quot;</span><span class="p">]</span>
+  <span class="n">avg_humidity</span> <span class="o">=</span> <span class="n">weather_analysis</span><span class="p">[</span><span class="s2">&quot;avg_humidity&quot;</span><span class="p">]</span>
+  <span class="n">rain_days</span> <span class="o">=</span> <span class="n">weather_analysis</span><span class="p">[</span><span class="s2">&quot;rain_days&quot;</span><span class="p">]</span>
+  <span class="n">hot_days</span> <span class="o">=</span> <span class="n">weather_analysis</span><span class="p">[</span><span class="s2">&quot;hot_days&quot;</span><span class="p">]</span>
+  <span class="n">cold_days</span> <span class="o">=</span> <span class="n">weather_analysis</span><span class="p">[</span><span class="s2">&quot;cold_days&quot;</span><span class="p">]</span>
+  <span class="n">total_days</span> <span class="o">=</span> <span class="n">weather_analysis</span><span class="p">[</span><span class="s2">&quot;total_days&quot;</span><span class="p">]</span>
+  
+  <span class="c1"># Wheat recommendations</span>
+  <span class="k">if</span> <span class="n">crop_id</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>  <span class="c1"># Wheat</span>
+    <span class="k">if</span> <span class="n">cold_days</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;protect&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Cold weather expected (</span><span class="si">{</span><span class="n">cold_days</span><span class="si">}</span><span class="s2"> cold days). Consider covering wheat to protect from frost.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span>
+      <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">rain_days</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;monitor&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;High rainfall expected (</span><span class="si">{</span><span class="n">rain_days</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">total_days</span><span class="si">}</span><span class="s2"> days). Monitor for fungal diseases and ensure proper drainage.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span>
+      <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">avg_humidity</span> <span class="o">&lt;</span> <span class="mi">40</span> <span class="ow">and</span> <span class="n">rain_days</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;water&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Low humidity (</span><span class="si">{</span><span class="n">avg_humidity</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%) and no rain expected. Wheat needs consistent moisture.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span>
+      <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;monitor&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="s2">&quot;Weather conditions are suitable for wheat. Continue regular monitoring.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;low&quot;</span>
+      <span class="p">}</span>
+  
+  <span class="c1"># Carrot recommendations  </span>
+  <span class="k">elif</span> <span class="n">crop_id</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>  <span class="c1"># Carrot</span>
+    <span class="k">if</span> <span class="n">rain_days</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;harvest&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Heavy rain expected (</span><span class="si">{</span><span class="n">rain_days</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">total_days</span><span class="si">}</span><span class="s2"> days). Harvest mature carrots to prevent splitting and rot.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span>
+      <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">avg_temp</span> <span class="o">&gt;</span> <span class="mi">28</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;water&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;High temperatures expected (</span><span class="si">{</span><span class="n">avg_temp</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C). Increase watering to prevent carrots from becoming woody.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span>
+      <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">avg_humidity</span> <span class="o">&lt;</span> <span class="mi">50</span> <span class="ow">and</span> <span class="n">rain_days</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;water&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Low humidity (</span><span class="si">{</span><span class="n">avg_humidity</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%) and minimal rain. Carrots need consistent soil moisture.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span>
+      <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;monitor&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="s2">&quot;Good growing conditions for carrots. Maintain regular care routine.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;low&quot;</span>
+      <span class="p">}</span>
+  
+  <span class="c1"># Basil recommendations</span>
+  <span class="k">elif</span> <span class="n">crop_id</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span>  <span class="c1"># Basil</span>
+    <span class="k">if</span> <span class="n">cold_days</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;harvest&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Cold weather approaching (</span><span class="si">{</span><span class="n">cold_days</span><span class="si">}</span><span class="s2"> cold days). Harvest basil before frost damage occurs.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;urgent&quot;</span>
+      <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">rain_days</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;protect&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Heavy rain expected (</span><span class="si">{</span><span class="n">rain_days</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">total_days</span><span class="si">}</span><span class="s2"> days). Protect basil from overwatering and fungal issues.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span>
+      <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">hot_days</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">avg_humidity</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;water&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Hot, dry conditions expected. Basil needs frequent watering and possible shade protection.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span>
+      <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">avg_humidity</span> <span class="o">&lt;</span> <span class="mi">50</span> <span class="ow">and</span> <span class="n">rain_days</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;water&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Low humidity (</span><span class="si">{</span><span class="n">avg_humidity</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%) and no rain. Basil requires consistent moisture.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span>
+      <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;monitor&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="s2">&quot;Favorable conditions for basil growth. Continue regular care.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;low&quot;</span>
+      <span class="p">}</span>
+
+  <span class="c1"># Spinach recommendations</span>
+  <span class="k">elif</span> <span class="n">crop_id</span> <span class="o">==</span> <span class="s2">&quot;4&quot;</span><span class="p">:</span>  <span class="c1"># Spinach</span>
+    <span class="k">if</span> <span class="n">hot_days</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;harvest&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Hot weather expected (</span><span class="si">{</span><span class="n">hot_days</span><span class="si">}</span><span class="s2"> hot days). Harvest spinach before it bolts in high temperatures.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span>
+      <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">avg_temp</span> <span class="o">&gt;</span> <span class="mi">24</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;harvest&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Temperature rising to </span><span class="si">{</span><span class="n">avg_temp</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C. Spinach quality deteriorates in warm weather.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span>
+      <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">rain_days</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;monitor&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Heavy rain expected (</span><span class="si">{</span><span class="n">rain_days</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">total_days</span><span class="si">}</span><span class="s2"> days). Monitor for leaf spot and ensure good air circulation.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span>
+      <span class="p">}</span>
+    <span class="k">elif</span> <span class="n">avg_humidity</span> <span class="o">&lt;</span> <span class="mi">45</span> <span class="ow">and</span> <span class="n">rain_days</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;water&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Low humidity (</span><span class="si">{</span><span class="n">avg_humidity</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%) and minimal rain. Spinach needs consistent soil moisture.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span>
+      <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;monitor&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="s2">&quot;Cool weather is ideal for spinach. Continue normal care routine.&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;low&quot;</span>
+      <span class="p">}</span></div>
+
+<div class="viewcode-block" id="add_crop_recommendation_to_field"><a class="viewcode-back" href="../../index.html#services.crop_service.add_crop_recommendation_to_field">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">add_crop_recommendation_to_field</span><span class="p">(</span><span class="n">field_data</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Add crop recommendation to field data.&quot;&quot;&quot;</span>
+  <span class="n">crop_id</span> <span class="o">=</span> <span class="n">field_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;crop_id&#39;</span><span class="p">)</span>
+  <span class="n">weather_data</span> <span class="o">=</span> <span class="n">field_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weather&#39;</span><span class="p">,</span> <span class="p">[])</span>
+  
+  <span class="k">if</span> <span class="n">crop_id</span> <span class="ow">and</span> <span class="n">weather_data</span><span class="p">:</span>
+    <span class="n">recommendation</span> <span class="o">=</span> <span class="n">get_crop_recommendation</span><span class="p">(</span><span class="n">crop_id</span><span class="p">,</span> <span class="n">weather_data</span><span class="p">)</span>
+    <span class="n">field_data</span><span class="p">[</span><span class="s1">&#39;recommendation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">recommendation</span>
+  <span class="k">else</span><span class="p">:</span>
+    <span class="n">field_data</span><span class="p">[</span><span class="s1">&#39;recommendation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;monitor&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="s2">&quot;Insufficient data for specific recommendation&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;low&quot;</span>
+    <span class="p">}</span>
+  
+  <span class="k">return</span> <span class="n">field_data</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Daniel.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

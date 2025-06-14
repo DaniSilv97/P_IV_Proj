@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>models.field &mdash; SmartSprout 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=af2ce170"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            SmartSprout
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">backend</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">SmartSprout</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">models.field</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for models.field</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span>
+
+<div class="viewcode-block" id="Field"><a class="viewcode-back" href="../../index.html#models.field.Field">[docs]</a><span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Field</span><span class="p">:</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Field model for representing field data.&quot;&quot;&quot;</span>
+  <span class="n">field_id</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="n">crop_id</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span>
+  <span class="n">latitude</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">longitude</span><span class="p">:</span> <span class="nb">float</span>
+  <span class="n">weather</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+  <span class="n">recommendation</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+  
+<div class="viewcode-block" id="Field.from_dict"><a class="viewcode-back" href="../../index.html#models.field.Field.from_dict">[docs]</a>  <span class="nd">@classmethod</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Field&#39;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create a Field instance from a dictionary.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+      <span class="n">field_id</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field_id&#39;</span><span class="p">),</span>
+      <span class="n">name</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span>
+      <span class="n">crop_id</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;crop_id&#39;</span><span class="p">),</span>
+      <span class="n">user_id</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">),</span>
+      <span class="n">latitude</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;latitude&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+      <span class="n">longitude</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;longitude&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+      <span class="n">weather</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weather&#39;</span><span class="p">),</span>
+      <span class="n">recommendation</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;recommendation&#39;</span><span class="p">)</span>
+    <span class="p">)</span></div>
+  
+<div class="viewcode-block" id="Field.to_dict"><a class="viewcode-back" href="../../index.html#models.field.Field.to_dict">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert Field instance to dictionary.&quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s1">&#39;field_id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_id</span><span class="p">,</span>
+      <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+      <span class="s1">&#39;crop_id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop_id</span><span class="p">,</span>
+      <span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span>
+      <span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span>
+      <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span>
+    <span class="p">}</span>
+    
+    <span class="c1"># Only include weather and recommendation if they exist</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">weather</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">result</span><span class="p">[</span><span class="s1">&#39;weather&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weather</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recommendation</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+      <span class="n">result</span><span class="p">[</span><span class="s1">&#39;recommendation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recommendation</span>
+        
+    <span class="k">return</span> <span class="n">result</span></div>
+  
+<div class="viewcode-block" id="Field.to_storage_dict"><a class="viewcode-back" href="../../index.html#models.field.Field.to_storage_dict">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">to_storage_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert Field instance to dictionary for storage (without weather/recommendation).&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="s1">&#39;field_id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_id</span><span class="p">,</span>
+      <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+      <span class="s1">&#39;crop_id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">crop_id</span><span class="p">,</span>
+      <span class="s1">&#39;user_id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span>
+      <span class="s1">&#39;latitude&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span>
+      <span class="s1">&#39;longitude&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span>
+    <span class="p">}</span></div>
+  
+<div class="viewcode-block" id="Field.get_coordinates"><a class="viewcode-back" href="../../index.html#models.field.Field.get_coordinates">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">get_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get latitude and longitude as a tuple.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">latitude</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">longitude</span><span class="p">)</span></div>
+  
+<div class="viewcode-block" id="Field.get_crop_name"><a class="viewcode-back" href="../../index.html#models.field.Field.get_crop_name">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">get_crop_name</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the crop name based on crop_id.&quot;&quot;&quot;</span>
+    <span class="n">crop_mapping</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s2">&quot;1&quot;</span><span class="p">:</span> <span class="s2">&quot;Wheat&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;2&quot;</span><span class="p">:</span> <span class="s2">&quot;Carrot&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;3&quot;</span><span class="p">:</span> <span class="s2">&quot;Basil&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;4&quot;</span><span class="p">:</span> <span class="s2">&quot;Spinach&quot;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">crop_mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">crop_id</span><span class="p">,</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">)</span></div>
+  
+<div class="viewcode-block" id="Field.set_weather"><a class="viewcode-back" href="../../index.html#models.field.Field.set_weather">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">set_weather</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weather_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set weather data for the field.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">weather</span> <span class="o">=</span> <span class="n">weather_data</span></div>
+  
+<div class="viewcode-block" id="Field.set_recommendation"><a class="viewcode-back" href="../../index.html#models.field.Field.set_recommendation">[docs]</a>  <span class="k">def</span><span class="w"> </span><span class="nf">set_recommendation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">recommendation_data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set recommendation data for the field.&quot;&quot;&quot;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">recommendation</span> <span class="o">=</span> <span class="n">recommendation_data</span></div>
+  
+  <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Field(id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">field_id</span><span class="si">}</span><span class="s2">, name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">, crop=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">get_crop_name</span><span class="p">()</span><span class="si">}</span><span class="s2">, user_id=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">user_id</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Daniel.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
