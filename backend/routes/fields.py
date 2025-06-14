@@ -1,7 +1,8 @@
 from flask import Blueprint, request, session, jsonify
-import json
+from data.data_access import data_access
 from services.weather_service import get_current_weather, get_weather_forecast
 from services.crop_service import add_crop_recommendation_to_field
+from models.field import Field
 
 fields_bp = Blueprint('fields', __name__)
 
@@ -16,23 +17,20 @@ def get_fields():
     return jsonify({"error": "User ID not found in session"}), 401
 
   try:
-    with open('./data/fields.json', 'r') as f:
-      fields_data = json.load(f)
-      fields = fields_data.get('fields', [])
+    # Get user fields using the data access layer
+    user_fields = data_access.get_fields_by_user_id(user_id)
+    
+    enriched_fields = []
+    for field in user_fields:
+      # Get weather data and set it on the field
+      weather = get_current_weather(field.latitude, field.longitude)
+      field.set_weather(weather)
+      enriched_fields.append(field.to_dict())
+
+    return jsonify({"fields": enriched_fields})
+
   except Exception as e:
     return jsonify({"error": "Failed to load fields data"}), 500
-
-  user_fields = [field for field in fields if field.get('user_id') == user_id]
-
-  enriched_fields = []
-  for field in user_fields:
-    lat = field.get('latitude')
-    lon = field.get('longitude')
-    weather = get_current_weather(lat, lon)
-    field['weather'] = weather
-    enriched_fields.append(field)
-
-  return jsonify({"fields": enriched_fields})
 
 @fields_bp.route('/fields/<field_id>', methods=['GET'])
 def get_field(field_id):
@@ -45,24 +43,24 @@ def get_field(field_id):
     return jsonify({"error": "User ID not found in session"}), 401
 
   try:
-    with open('./data/fields.json', 'r') as f:
-      fields_data = json.load(f)
-      fields = fields_data.get('fields', [])
+    # Get field using the data access layer
+    field = data_access.get_user_field_by_id(field_id, user_id)
+    
+    if not field:
+      return jsonify({"error": "Field not found"}), 404
+
+    # Get weather forecast and set it on the field
+    weather = get_weather_forecast(field.latitude, field.longitude)
+    field.set_weather(weather)
+    
+    # Add crop recommendation
+    field_dict = field.to_dict()
+    field_dict = add_crop_recommendation_to_field(field_dict)
+    
+    return jsonify({"field": field_dict})
+
   except Exception as e:
-    return jsonify({"error": "Failed to load fields data"}), 500
-
-  field = next((f for f in fields if f.get('field_id') == field_id and f.get('user_id') == user_id), None)
-
-  if not field:
-    return jsonify({"error": "Field not found"}), 404
-
-  lat = field.get('latitude')
-  lon = field.get('longitude')
-  weather = get_weather_forecast(lat, lon)
-  field['weather'] = weather
-  field = add_crop_recommendation_to_field(field)
-  
-  return jsonify({"field": field})
+    return jsonify({"error": "Failed to load field data"}), 500 
 
 @fields_bp.route('/fields/<field_id>', methods=['DELETE'])
 def delete_field(field_id):
@@ -76,17 +74,18 @@ def delete_field(field_id):
   if not field_id:
     return jsonify({"error": "Field ID is required"}), 400
   
-  print(f"Deleting field with ID: {field_id} for user ID: {user_id}")
   try:
-    with open('./data/fields.json', 'r') as f:
-      fields_data = json.load(f)
-      fields = fields_data.get('fields', [])
-      updated_fields = [field for field in fields if not (field.get('field_id') == field_id and field.get('user_id') == user_id)]
+    # Check if field exists and belongs to user
+    field = data_access.get_user_field_by_id(field_id, user_id)
+    if not field:
+      return jsonify({"error": "Field not found"}), 404
     
-    with open('./data/fields.json', 'w') as f:
-      json.dump({"fields": updated_fields}, f, indent=2)
-    
-    return jsonify({"message": "Field deleted successfully"})
+    # Delete the field
+    if data_access.delete_field(field_id, user_id):
+      return jsonify({"message": "Field deleted successfully"})
+    else:
+      return jsonify({"error": "Failed to delete field"}), 500
+          
   except Exception as e:
     print(f"Error deleting field: {e}")
     return jsonify({"error": "Failed to delete field"}), 500    
@@ -102,6 +101,8 @@ def create_field():
     return jsonify({"error": "User ID not found in session"}), 401
   
   data = request.get_json()
+  
+  # Validate required fields
   if not data or not data.get('name'):
     return jsonify({"error": "Name required"}), 400
   if not data.get('latitude') or not data.get('longitude'):
@@ -110,43 +111,78 @@ def create_field():
     return jsonify({"error": "Crop ID is required"}), 400
 
   try:
-    with open('./data/fields.json', 'r') as f:
-      fields_data = json.load(f)
-      fields = fields_data.get('fields', [])
-      if fields:
-        last_id = max(int(field.get('field_id', 0)) for field in fields)
-      else:
-        last_id = 0
-  except Exception:
-    last_id = 0
+    # Create new field using the model
+    new_field = Field(
+      field_id="",  # Will be generated by data_access.create_field
+      name=data.get('name'),
+      crop_id=str(data.get('crop_id')),
+      user_id=user_id,
+      latitude=float(data.get('latitude')),
+      longitude=float(data.get('longitude'))
+    )
 
-  new_field = {
-    "field_id": str(last_id + 1),
-    "name": data.get('name'),
-    "crop_id": str(data.get('crop_id', None)),
-    "user_id": user_id,
-    "latitude": data.get('latitude'),
-    "longitude": data.get('longitude')
-  }
+    # Save the field
+    if data_access.create_field(new_field):
+      # Add weather data to the newly created field
+      weather = get_current_weather(new_field.latitude, new_field.longitude)
+      new_field.set_weather(weather)
 
-  try:
-    with open('./data/fields.json', 'r') as f:
-      fields_data = json.load(f)
-      fields = fields_data.get('fields', [])
-      fields.append(new_field)
-    
-    with open('./data/fields.json', 'w') as f:
-      json.dump({"fields": fields}, f, indent=2)
-
-    # Add weather data to the newly created field
-    lat = new_field.get('latitude')
-    lon = new_field.get('longitude')
-    weather = get_current_weather(lat, lon)
-    new_field["weather"] = weather
-
-    return jsonify({
-      "message": "Field created successfully",
-      "field": new_field
-    }), 201
+      return jsonify({
+        "message": "Field created successfully",
+        "field": new_field.to_dict()
+      }), 201
+    else:
+      return jsonify({"error": "Failed to create field"}), 500
+          
+  except ValueError as e:
+    return jsonify({"error": f"Invalid latitude or longitude: {str(e)}"}), 400
   except Exception as e:
     return jsonify({"error": "Failed to create field"}), 500
+
+@fields_bp.route('/fields/<field_id>', methods=['PUT'])
+def update_field(field_id):
+  """Update a field for the logged-in user."""
+  if not session.get('logged_in'):
+    return jsonify({"error": "Unauthorized"}), 401
+  
+  user_id = session.get('user_id')
+  if not user_id:
+    return jsonify({"error": "User ID not found in session"}), 401
+  
+  data = request.get_json()
+  if not data:
+    return jsonify({"error": "No data provided"}), 400
+  
+  try:
+    # Get existing field
+    field = data_access.get_user_field_by_id(field_id, user_id)
+    if not field:
+      return jsonify({"error": "Field not found"}), 404
+    
+    # Update field properties
+    if 'name' in data:
+      field.name = data['name']
+    if 'crop_id' in data:
+      field.crop_id = str(data['crop_id'])
+    if 'latitude' in data:
+      field.latitude = float(data['latitude'])
+    if 'longitude' in data:
+      field.longitude = float(data['longitude'])
+    
+    # Save the updated field
+    if data_access.update_field(field):
+      # Add weather data to the updated field
+      weather = get_current_weather(field.latitude, field.longitude)
+      field.set_weather(weather)
+      
+      return jsonify({
+        "message": "Field updated successfully",
+        "field": field.to_dict()
+      })
+    else:
+      return jsonify({"error": "Failed to update field"}), 500
+          
+  except ValueError as e:
+    return jsonify({"error": f"Invalid latitude or longitude: {str(e)}"}), 400
+  except Exception as e:
+    return jsonify({"error": "Failed to update field"}), 500
