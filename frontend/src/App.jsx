@@ -9,6 +9,7 @@ import Register from './views/Register';
 import FieldsLayout from './views/MyFields/FieldsLayout';
 import MyFields from './views/MyFields';
 import MyField from './views/MyField';
+import DevGuideViewer from './views/DevGuideViewer';
 
 function App() {
   useEffect(() => {
@@ -68,6 +69,7 @@ function App() {
           </ProtectedRoute>
         } />
       </Route>
+      <Route path="/docs" element={<DevGuideViewer />} />
     </Routes>
   );
 }
