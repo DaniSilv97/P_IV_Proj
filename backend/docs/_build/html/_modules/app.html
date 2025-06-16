@@ -1,784 +1,153 @@
 <!DOCTYPE html>
-
-<html lang="en" data-content_root="../">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>app &#8212; SmartSprout 1.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=6625fa76" />
-    <link rel="stylesheet" type="text/css" href="../_static/groundwork.css?v=594d7a89" />
-    <script src="../_static/documentation_options.js?v=8d563738"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>app &mdash; SmartSprout 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=af2ce170"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
-  </head><body>
-    <div class="related" role="navigation" aria-label="Related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">SmartSprout 1.0.0 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Module code</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">app</a></li> 
-      </ul>
-    </div>  
+</head>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            SmartSprout
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">backend</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">SmartSprout</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Module code</a></li>
+      <li class="breadcrumb-item active">app</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
   <h1>Source code for app</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span><span class="p">,</span> <span class="n">session</span><span class="p">,</span> <span class="n">jsonify</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">flask_socketio</span><span class="w"> </span><span class="kn">import</span> <span class="n">SocketIO</span><span class="p">,</span> <span class="n">emit</span><span class="p">,</span> <span class="n">join_room</span><span class="p">,</span> <span class="n">leave_room</span>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">flask</span><span class="w"> </span><span class="kn">import</span> <span class="n">Flask</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">flask_socketio</span><span class="w"> </span><span class="kn">import</span> <span class="n">SocketIO</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">flask_cors</span><span class="w"> </span><span class="kn">import</span> <span class="n">CORS</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">dotenv</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dotenv</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">threading</span><span class="w"> </span><span class="kn">import</span> <span class="n">Thread</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">routes.auth</span><span class="w"> </span><span class="kn">import</span> <span class="n">auth_bp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">routes.fields</span><span class="w"> </span><span class="kn">import</span> <span class="n">fields_bp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">socketio_handlers</span><span class="w"> </span><span class="kn">import</span> <span class="n">register_socketio_handlers</span>
+
 <span class="n">load_dotenv</span><span class="p">()</span>
 
-<span class="c1">#: Initialize Flask app</span>
-<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
-<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;SECRET_KEY&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;SECRET_KEY&#39;</span><span class="p">,</span> <span class="s1">&#39;your-secret-key-change-this&#39;</span><span class="p">)</span>
-<span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;SESSION_TYPE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;filesystem&#39;</span>
-
-<span class="c1">#: Enable CORS for React frontend at http://localhost:5173</span>
-<span class="n">CORS</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">origins</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;http://localhost:5173&quot;</span><span class="p">],</span> <span class="n">supports_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="s2">&quot;DELETE&quot;</span><span class="p">])</span>
-
-<span class="c1">#: Initialize SocketIO with CORS support for the React frontend</span>
-<span class="n">socketio</span> <span class="o">=</span> <span class="n">SocketIO</span><span class="p">(</span>
-  <span class="n">app</span><span class="p">,</span>
-  <span class="n">cors_allowed_origins</span><span class="o">=</span><span class="s2">&quot;http://localhost:5173&quot;</span><span class="p">,</span>
-  <span class="n">manage_session</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-  <span class="n">logger</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-  <span class="n">engineio_logger</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
-
-<span class="c1">#: Store connected users (for production, use Redis or a database)</span>
-<span class="n">connected_users</span> <span class="o">=</span> <span class="p">{}</span>
-
-<div class="viewcode-block" id="index">
-<a class="viewcode-back" href="../app.html#app.index">[docs]</a>
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Root endpoint to check if the Flask backend is running.</span>
-
-<span class="sd">    :return: JSON message indicating backend status.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Flask backend is running!&quot;</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;success&quot;</span><span class="p">})</span></div>
-
-
-<div class="viewcode-block" id="login">
-<a class="viewcode-back" href="../app.html#app.login">[docs]</a>
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/login&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">login</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Login endpoint for user authentication.</span>
-
-<span class="sd">    Expects JSON with &#39;email&#39; and &#39;password&#39;.</span>
-<span class="sd">    Loads users from JSON file and checks credentials.</span>
-<span class="sd">    Sets session data on successful login.</span>
-
-<span class="sd">    :return: JSON with user info or error.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
-    <span class="n">email</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">)</span>
-    <span class="n">password</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">email</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">password</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Email and password required&quot;</span><span class="p">}),</span> <span class="mi">400</span>
-
-    <span class="c1"># Load users from JSON file</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./data/users.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">users_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-            <span class="n">users</span> <span class="o">=</span> <span class="n">users_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;users&#39;</span><span class="p">,</span> <span class="p">[])</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Failed to load users data&quot;</span><span class="p">}),</span> <span class="mi">500</span>
-
-    <span class="c1"># Check if user exists and password matches</span>
-    <span class="n">user</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">user</span> <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">users</span> <span class="k">if</span> <span class="n">user</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="n">email</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">and</span> <span class="n">user</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">password</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">user</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid email or password&quot;</span><span class="p">}),</span> <span class="mi">401</span>
-
-    <span class="c1"># Create session</span>
-    <span class="n">session</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span> <span class="o">=</span>  <span class="n">user</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span>
-    <span class="n">session</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span>
-    <span class="n">session</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
-    <span class="n">session</span><span class="p">[</span><span class="s1">&#39;surname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;surname&#39;</span><span class="p">)</span>
-    <span class="n">session</span><span class="p">[</span><span class="s1">&#39;logged_in&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-
-    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span>
-        <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Login successful&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">session</span><span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">],</span>
-        <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">user</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">],</span>
-        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span>
-        <span class="s2">&quot;surname&quot;</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;surname&#39;</span><span class="p">)</span>
-    <span class="p">})</span></div>
-
-
-<div class="viewcode-block" id="logout">
-<a class="viewcode-back" href="../app.html#app.logout">[docs]</a>
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/logout&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">logout</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Logout endpoint to clear user session.</span>
-
-<span class="sd">    :return: JSON message indicating logout status.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">user_id</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">user_id</span> <span class="ow">and</span> <span class="n">user_id</span> <span class="ow">in</span> <span class="n">connected_users</span><span class="p">:</span>
-        <span class="k">del</span> <span class="n">connected_users</span><span class="p">[</span><span class="n">user_id</span><span class="p">]</span>
-
-    <span class="n">session</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Logout successful&quot;</span><span class="p">})</span></div>
-
-
-<div class="viewcode-block" id="get_session">
-<a class="viewcode-back" href="../app.html#app.get_session">[docs]</a>
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/session&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_session</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Get current session information.</span>
-
-<span class="sd">    :return: JSON with session status and user info.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;logged_in&#39;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span>
-            <span class="s2">&quot;logged_in&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-            <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">),</span>
-            <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">)</span>
-        <span class="p">})</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;logged_in&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}),</span> <span class="mi">401</span></div>
-
-
-<div class="viewcode-block" id="get_fields">
-<a class="viewcode-back" href="../app.html#app.get_fields">[docs]</a>
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/fields&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_fields</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Get all fields for the logged-in user, enriched with weather data.</span>
-
-<span class="sd">    :return: JSON list of fields with weather info.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;logged_in&#39;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Unauthorized&quot;</span><span class="p">}),</span> <span class="mi">401</span>
-
-    <span class="n">user_id</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">user_id</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;User ID not found in session&quot;</span><span class="p">}),</span> <span class="mi">401</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./data/fields.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">fields_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-            <span class="n">fields</span> <span class="o">=</span> <span class="n">fields_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fields&#39;</span><span class="p">,</span> <span class="p">[])</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Failed to load fields data&quot;</span><span class="p">}),</span> <span class="mi">500</span>
-
-    <span class="n">user_fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">field</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span> <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">]</span>
-    <span class="n">weather_api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;OPENWEATHER_API_KEY&#39;</span><span class="p">)</span>
-
-    <span class="n">enriched_fields</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">user_fields</span><span class="p">:</span>
-        <span class="n">lat</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;latitude&#39;</span><span class="p">)</span>
-        <span class="n">lon</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;longitude&#39;</span><span class="p">)</span>
-        <span class="n">weather</span> <span class="o">=</span> <span class="p">{}</span>
-
-        <span class="k">if</span> <span class="n">weather_api_key</span> <span class="ow">and</span> <span class="n">lat</span> <span class="ow">and</span> <span class="n">lon</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">weather_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://api.openweathermap.org/data/2.5/weather?lat=</span><span class="si">{</span><span class="n">lat</span><span class="si">}</span><span class="s2">&amp;lon=</span><span class="si">{</span><span class="n">lon</span><span class="si">}</span><span class="s2">&amp;units=metric&amp;appid=</span><span class="si">{</span><span class="n">weather_api_key</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">weather_url</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
-                    <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-                    <span class="n">weather</span> <span class="o">=</span> <span class="p">{</span>
-                        <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;temp&quot;</span><span class="p">),</span>
-                        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;weather&quot;</span><span class="p">,</span> <span class="p">[{}])[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">),</span>
-                        <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;weather&quot;</span><span class="p">,</span> <span class="p">[{}])[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;icon&quot;</span><span class="p">),</span>
-                        <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;humidity&quot;</span><span class="p">),</span>
-                    <span class="p">}</span>
-            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="n">weather</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Failed to fetch weather&quot;</span><span class="p">}</span>
-
-        <span class="n">field</span><span class="p">[</span><span class="s1">&#39;weather&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weather</span>
-        <span class="n">enriched_fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;fields&quot;</span><span class="p">:</span> <span class="n">enriched_fields</span><span class="p">})</span></div>
-
-
-<div class="viewcode-block" id="get_field">
-<a class="viewcode-back" href="../app.html#app.get_field">[docs]</a>
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/fields/&lt;field_id&gt;&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_field</span><span class="p">(</span><span class="n">field_id</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Get a specific field by ID for the logged-in user, including weather forecast and crop recommendation.</span>
-
-<span class="sd">    :param field_id: ID of the field to retrieve.</span>
-<span class="sd">    :return: JSON with field data, weather, and recommendation.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;logged_in&#39;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Unauthorized&quot;</span><span class="p">}),</span> <span class="mi">401</span>
-
-    <span class="n">user_id</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">user_id</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;User ID not found in session&quot;</span><span class="p">}),</span> <span class="mi">401</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./data/fields.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">fields_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-            <span class="n">fields</span> <span class="o">=</span> <span class="n">fields_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fields&#39;</span><span class="p">,</span> <span class="p">[])</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Failed to load fields data&quot;</span><span class="p">}),</span> <span class="mi">500</span>
-
-    <span class="n">field</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fields</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field_id&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">field_id</span> <span class="ow">and</span> <span class="n">f</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">field</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Field not found&quot;</span><span class="p">}),</span> <span class="mi">404</span>
-
-    <span class="n">weather_api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;OPENWEATHER_API_KEY&#39;</span><span class="p">)</span>
-    <span class="n">lat</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;latitude&#39;</span><span class="p">)</span>
-    <span class="n">lon</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;longitude&#39;</span><span class="p">)</span>
-    <span class="n">weather</span> <span class="o">=</span> <span class="p">{}</span>
-
-    <span class="k">if</span> <span class="n">weather_api_key</span> <span class="ow">and</span> <span class="n">lat</span> <span class="ow">and</span> <span class="n">lon</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">weather_url</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;https://api.openweathermap.org/data/2.5/forecast?lat=</span><span class="si">{</span><span class="n">lat</span><span class="si">}</span><span class="s2">&amp;lon=</span><span class="si">{</span><span class="n">lon</span><span class="si">}</span><span class="s2">&amp;exclude=minutely,alerts&amp;units=metric&amp;appid=</span><span class="si">{</span><span class="n">weather_api_key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">weather_url</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
-                <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-
-                <span class="n">forecast_by_day</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;list&quot;</span><span class="p">,</span> <span class="p">[]):</span>
-                    <span class="n">date_str</span> <span class="o">=</span> <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;dt_txt&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-                    <span class="n">forecast_by_day</span><span class="p">[</span><span class="n">date_str</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">entry</span><span class="p">)</span>
-
-                <span class="n">daily</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="n">num_days</span> <span class="o">=</span> <span class="mi">5</span>
-                <span class="k">for</span> <span class="n">date</span><span class="p">,</span> <span class="n">entries</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">forecast_by_day</span><span class="o">.</span><span class="n">items</span><span class="p">())[:</span><span class="n">num_days</span><span class="p">]:</span>
-                    <span class="n">segments</span> <span class="o">=</span> <span class="p">[]</span>
-                    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">entries</span><span class="p">:</span>
-                        <span class="n">segments</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-                            <span class="s2">&quot;time&quot;</span><span class="p">:</span> <span class="n">e</span><span class="p">[</span><span class="s2">&quot;dt_txt&quot;</span><span class="p">],</span>
-                            <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="n">e</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;temp&quot;</span><span class="p">],</span>
-                            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">e</span><span class="p">[</span><span class="s2">&quot;weather&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;description&quot;</span><span class="p">],</span>
-                            <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="n">e</span><span class="p">[</span><span class="s2">&quot;weather&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;icon&quot;</span><span class="p">],</span>
-                            <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="n">e</span><span class="p">[</span><span class="s2">&quot;main&quot;</span><span class="p">][</span><span class="s2">&quot;humidity&quot;</span><span class="p">]</span>
-                        <span class="p">})</span>
-
-                    <span class="n">daily</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-                        <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="n">date</span><span class="p">,</span>
-                        <span class="s2">&quot;segments&quot;</span><span class="p">:</span> <span class="n">segments</span>
-                    <span class="p">})</span>
-                
-                <span class="n">weather</span> <span class="o">=</span> <span class="n">daily</span>
-
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">weather</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Failed to fetch weather forecast&quot;</span><span class="p">}</span>
-
-    <span class="n">field</span><span class="p">[</span><span class="s1">&#39;weather&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weather</span>
-    <span class="n">field</span> <span class="o">=</span> <span class="n">add_crop_recommendation_to_field</span><span class="p">(</span><span class="n">field</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="n">field</span><span class="p">})</span></div>
-
-
-<div class="viewcode-block" id="get_crop_recommendation">
-<a class="viewcode-back" href="../app.html#app.get_crop_recommendation">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_crop_recommendation</span><span class="p">(</span><span class="n">crop_id</span><span class="p">,</span> <span class="n">weather_data</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Get crop recommendation based on crop type and weather forecast</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        crop_id (str): &quot;1&quot; for Wheat, &quot;2&quot; for Carrot, &quot;3&quot; for Basil, &quot;4&quot; for Spinach</span>
-<span class="sd">        weather_data (list): List of daily weather forecasts with segments</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        dict: Recommendation with action and reasoning</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># Crop mapping</span>
-    <span class="n">crop_types</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;1&quot;</span><span class="p">:</span> <span class="s2">&quot;Wheat&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;2&quot;</span><span class="p">:</span> <span class="s2">&quot;Carrot&quot;</span><span class="p">,</span> 
-        <span class="s2">&quot;3&quot;</span><span class="p">:</span> <span class="s2">&quot;Basil&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;4&quot;</span><span class="p">:</span> <span class="s2">&quot;Spinach&quot;</span>
-    <span class="p">}</span>
-    
-    <span class="k">if</span> <span class="n">crop_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">crop_types</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Invalid crop ID&quot;</span><span class="p">}</span>
-    
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">weather_data</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">weather_data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="s2">&quot;error&quot;</span> <span class="ow">in</span> <span class="n">weather_data</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Weather data unavailable&quot;</span><span class="p">}</span>
-    
-    <span class="n">crop_name</span> <span class="o">=</span> <span class="n">crop_types</span><span class="p">[</span><span class="n">crop_id</span><span class="p">]</span>
-    
-    <span class="c1"># Analyze weather patterns over next few days</span>
-    <span class="n">weather_analysis</span> <span class="o">=</span> <span class="n">analyze_weather_patterns</span><span class="p">(</span><span class="n">weather_data</span><span class="p">)</span>
-    
-    <span class="c1"># Get recommendation based on crop type and weather</span>
-    <span class="n">recommendation</span> <span class="o">=</span> <span class="n">get_recommendation_logic</span><span class="p">(</span><span class="n">crop_id</span><span class="p">,</span> <span class="n">crop_name</span><span class="p">,</span> <span class="n">weather_analysis</span><span class="p">)</span>
-    
-    <span class="k">return</span> <span class="n">recommendation</span></div>
-
-
-<div class="viewcode-block" id="analyze_weather_patterns">
-<a class="viewcode-back" href="../app.html#app.analyze_weather_patterns">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">analyze_weather_patterns</span><span class="p">(</span><span class="n">weather_data</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Analyze weather patterns from forecast data.</span>
-
-<span class="sd">    :param weather_data: List of daily weather forecasts with segments.</span>
-<span class="sd">    :return: Dictionary with average temperature, humidity, rain/hot/cold days, and total days.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">total_temp</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">total_humidity</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">temp_count</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">humidity_count</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">rain_days</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">hot_days</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">cold_days</span> <span class="o">=</span> <span class="mi">0</span>
-    
-    <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">weather_data</span><span class="p">:</span>
-        <span class="n">daily_temps</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">daily_humidity</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">has_rain</span> <span class="o">=</span> <span class="kc">False</span>
-        
-        <span class="k">for</span> <span class="n">segment</span> <span class="ow">in</span> <span class="n">day</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;segments&quot;</span><span class="p">,</span> <span class="p">[]):</span>
-            <span class="n">temp</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;temperature&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-            <span class="n">humidity</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;humidity&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-            <span class="n">description</span> <span class="o">=</span> <span class="n">segment</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-            
-            <span class="n">daily_temps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
-            <span class="n">daily_humidity</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">humidity</span><span class="p">)</span>
-            
-            <span class="c1"># Check for rain indicators</span>
-            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">word</span> <span class="ow">in</span> <span class="n">description</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;rain&quot;</span><span class="p">,</span> <span class="s2">&quot;drizzle&quot;</span><span class="p">,</span> <span class="s2">&quot;shower&quot;</span><span class="p">,</span> <span class="s2">&quot;storm&quot;</span><span class="p">]):</span>
-                <span class="n">has_rain</span> <span class="o">=</span> <span class="kc">True</span>
-        
-        <span class="k">if</span> <span class="n">daily_temps</span><span class="p">:</span>
-            <span class="n">avg_daily_temp</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">daily_temps</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">daily_temps</span><span class="p">)</span>
-            <span class="n">avg_daily_humidity</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">daily_humidity</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">daily_humidity</span><span class="p">)</span>
-            
-            <span class="n">total_temp</span> <span class="o">+=</span> <span class="n">avg_daily_temp</span>
-            <span class="n">total_humidity</span> <span class="o">+=</span> <span class="n">avg_daily_humidity</span>
-            <span class="n">temp_count</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="n">humidity_count</span> <span class="o">+=</span> <span class="mi">1</span>
-            
-            <span class="k">if</span> <span class="n">avg_daily_temp</span> <span class="o">&gt;</span> <span class="mi">25</span><span class="p">:</span>  <span class="c1"># Hot day</span>
-                <span class="n">hot_days</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="k">elif</span> <span class="n">avg_daily_temp</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>  <span class="c1"># Cold day</span>
-                <span class="n">cold_days</span> <span class="o">+=</span> <span class="mi">1</span>
-                
-            <span class="k">if</span> <span class="n">has_rain</span><span class="p">:</span>
-                <span class="n">rain_days</span> <span class="o">+=</span> <span class="mi">1</span>
-    
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="s2">&quot;avg_temperature&quot;</span><span class="p">:</span> <span class="n">total_temp</span> <span class="o">/</span> <span class="n">temp_count</span> <span class="k">if</span> <span class="n">temp_count</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="s2">&quot;avg_humidity&quot;</span><span class="p">:</span> <span class="n">total_humidity</span> <span class="o">/</span> <span class="n">humidity_count</span> <span class="k">if</span> <span class="n">humidity_count</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
-        <span class="s2">&quot;rain_days&quot;</span><span class="p">:</span> <span class="n">rain_days</span><span class="p">,</span>
-        <span class="s2">&quot;hot_days&quot;</span><span class="p">:</span> <span class="n">hot_days</span><span class="p">,</span>
-        <span class="s2">&quot;cold_days&quot;</span><span class="p">:</span> <span class="n">cold_days</span><span class="p">,</span>
-        <span class="s2">&quot;total_days&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">weather_data</span><span class="p">)</span>
-    <span class="p">}</span></div>
-
-
-<div class="viewcode-block" id="get_recommendation_logic">
-<a class="viewcode-back" href="../app.html#app.get_recommendation_logic">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_recommendation_logic</span><span class="p">(</span><span class="n">crop_id</span><span class="p">,</span> <span class="n">crop_name</span><span class="p">,</span> <span class="n">weather_analysis</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generate recommendation based on crop type and weather analysis.</span>
-
-<span class="sd">    :param crop_id: Crop ID as string.</span>
-<span class="sd">    :param crop_name: Name of the crop.</span>
-<span class="sd">    :param weather_analysis: Dictionary with weather analysis.</span>
-<span class="sd">    :return: Recommendation dictionary.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">avg_temp</span> <span class="o">=</span> <span class="n">weather_analysis</span><span class="p">[</span><span class="s2">&quot;avg_temperature&quot;</span><span class="p">]</span>
-    <span class="n">avg_humidity</span> <span class="o">=</span> <span class="n">weather_analysis</span><span class="p">[</span><span class="s2">&quot;avg_humidity&quot;</span><span class="p">]</span>
-    <span class="n">rain_days</span> <span class="o">=</span> <span class="n">weather_analysis</span><span class="p">[</span><span class="s2">&quot;rain_days&quot;</span><span class="p">]</span>
-    <span class="n">hot_days</span> <span class="o">=</span> <span class="n">weather_analysis</span><span class="p">[</span><span class="s2">&quot;hot_days&quot;</span><span class="p">]</span>
-    <span class="n">cold_days</span> <span class="o">=</span> <span class="n">weather_analysis</span><span class="p">[</span><span class="s2">&quot;cold_days&quot;</span><span class="p">]</span>
-    <span class="n">total_days</span> <span class="o">=</span> <span class="n">weather_analysis</span><span class="p">[</span><span class="s2">&quot;total_days&quot;</span><span class="p">]</span>
-    
-    <span class="c1"># Wheat recommendations</span>
-    <span class="k">if</span> <span class="n">crop_id</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>  <span class="c1"># Wheat</span>
-        <span class="k">if</span> <span class="n">cold_days</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;protect&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Cold weather expected (</span><span class="si">{</span><span class="n">cold_days</span><span class="si">}</span><span class="s2"> cold days). Consider covering wheat to protect from frost.&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span>
-            <span class="p">}</span>
-        <span class="k">elif</span> <span class="n">rain_days</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;monitor&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;High rainfall expected (</span><span class="si">{</span><span class="n">rain_days</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">total_days</span><span class="si">}</span><span class="s2"> days). Monitor for fungal diseases and ensure proper drainage.&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span>
-            <span class="p">}</span>
-        <span class="k">elif</span> <span class="n">avg_humidity</span> <span class="o">&lt;</span> <span class="mi">40</span> <span class="ow">and</span> <span class="n">rain_days</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;water&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Low humidity (</span><span class="si">{</span><span class="n">avg_humidity</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%) and no rain expected. Wheat needs consistent moisture.&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span>
-            <span class="p">}</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;monitor&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="s2">&quot;Weather conditions are suitable for wheat. Continue regular monitoring.&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;low&quot;</span>
-            <span class="p">}</span>
-    
-    <span class="c1"># Carrot recommendations  </span>
-    <span class="k">elif</span> <span class="n">crop_id</span> <span class="o">==</span> <span class="s2">&quot;2&quot;</span><span class="p">:</span>  <span class="c1"># Carrot</span>
-        <span class="k">if</span> <span class="n">rain_days</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;harvest&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Heavy rain expected (</span><span class="si">{</span><span class="n">rain_days</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">total_days</span><span class="si">}</span><span class="s2"> days). Harvest mature carrots to prevent splitting and rot.&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span>
-            <span class="p">}</span>
-        <span class="k">elif</span> <span class="n">avg_temp</span> <span class="o">&gt;</span> <span class="mi">28</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;water&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;High temperatures expected (</span><span class="si">{</span><span class="n">avg_temp</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C). Increase watering to prevent carrots from becoming woody.&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span>
-            <span class="p">}</span>
-        <span class="k">elif</span> <span class="n">avg_humidity</span> <span class="o">&lt;</span> <span class="mi">50</span> <span class="ow">and</span> <span class="n">rain_days</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;water&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Low humidity (</span><span class="si">{</span><span class="n">avg_humidity</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%) and minimal rain. Carrots need consistent soil moisture.&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span>
-            <span class="p">}</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;monitor&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="s2">&quot;Good growing conditions for carrots. Maintain regular care routine.&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;low&quot;</span>
-            <span class="p">}</span>
-    
-    <span class="c1"># Basil recommendations</span>
-    <span class="k">elif</span> <span class="n">crop_id</span> <span class="o">==</span> <span class="s2">&quot;3&quot;</span><span class="p">:</span>  <span class="c1"># Basil</span>
-        <span class="k">if</span> <span class="n">cold_days</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;harvest&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Cold weather approaching (</span><span class="si">{</span><span class="n">cold_days</span><span class="si">}</span><span class="s2"> cold days). Harvest basil before frost damage occurs.&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;urgent&quot;</span>
-            <span class="p">}</span>
-        <span class="k">elif</span> <span class="n">rain_days</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;protect&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Heavy rain expected (</span><span class="si">{</span><span class="n">rain_days</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">total_days</span><span class="si">}</span><span class="s2"> days). Protect basil from overwatering and fungal issues.&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span>
-            <span class="p">}</span>
-        <span class="k">elif</span> <span class="n">hot_days</span> <span class="o">&gt;=</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">avg_humidity</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;water&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Hot, dry conditions expected. Basil needs frequent watering and possible shade protection.&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span>
-            <span class="p">}</span>
-        <span class="k">elif</span> <span class="n">avg_humidity</span> <span class="o">&lt;</span> <span class="mi">50</span> <span class="ow">and</span> <span class="n">rain_days</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;water&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Low humidity (</span><span class="si">{</span><span class="n">avg_humidity</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%) and no rain. Basil requires consistent moisture.&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span>
-            <span class="p">}</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;monitor&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="s2">&quot;Favorable conditions for basil growth. Continue regular care.&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;low&quot;</span>
-            <span class="p">}</span>
-    
-    <span class="c1"># Spinach recommendations</span>
-    <span class="k">elif</span> <span class="n">crop_id</span> <span class="o">==</span> <span class="s2">&quot;4&quot;</span><span class="p">:</span>  <span class="c1"># Spinach</span>
-        <span class="k">if</span> <span class="n">hot_days</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;harvest&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Hot weather expected (</span><span class="si">{</span><span class="n">hot_days</span><span class="si">}</span><span class="s2"> hot days). Harvest spinach before it bolts in high temperatures.&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;high&quot;</span>
-            <span class="p">}</span>
-        <span class="k">elif</span> <span class="n">avg_temp</span> <span class="o">&gt;</span> <span class="mi">24</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;harvest&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Temperature rising to </span><span class="si">{</span><span class="n">avg_temp</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">°C. Spinach quality deteriorates in warm weather.&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span>
-            <span class="p">}</span>
-        <span class="k">elif</span> <span class="n">rain_days</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;monitor&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Heavy rain expected (</span><span class="si">{</span><span class="n">rain_days</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">total_days</span><span class="si">}</span><span class="s2"> days). Monitor for leaf spot and ensure good air circulation.&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span>
-            <span class="p">}</span>
-        <span class="k">elif</span> <span class="n">avg_humidity</span> <span class="o">&lt;</span> <span class="mi">45</span> <span class="ow">and</span> <span class="n">rain_days</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;water&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;Low humidity (</span><span class="si">{</span><span class="n">avg_humidity</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%) and minimal rain. Spinach needs consistent soil moisture.&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;medium&quot;</span>
-            <span class="p">}</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;monitor&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="s2">&quot;Cool weather is ideal for spinach. Continue normal care routine.&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;low&quot;</span>
-            <span class="p">}</span></div>
-
-
-<div class="viewcode-block" id="add_crop_recommendation_to_field">
-<a class="viewcode-back" href="../app.html#app.add_crop_recommendation_to_field">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">add_crop_recommendation_to_field</span><span class="p">(</span><span class="n">field_data</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Add crop recommendation to field data.</span>
-
-<span class="sd">    Call this function in your get_field route after getting weather data.</span>
-
-<span class="sd">    :param field_data: Dictionary with field information.</span>
-<span class="sd">    :return: Field data with &#39;recommendation&#39; key added.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;----------------------------&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">field_data</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;----------------------------&#39;</span><span class="p">)</span>
-    <span class="n">crop_id</span> <span class="o">=</span> <span class="n">field_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;crop_id&#39;</span><span class="p">)</span>
-    <span class="n">weather_data</span> <span class="o">=</span> <span class="n">field_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;weather&#39;</span><span class="p">,</span> <span class="p">[])</span>
-    
-    <span class="k">if</span> <span class="n">crop_id</span> <span class="ow">and</span> <span class="n">weather_data</span><span class="p">:</span>
-        <span class="n">recommendation</span> <span class="o">=</span> <span class="n">get_crop_recommendation</span><span class="p">(</span><span class="n">crop_id</span><span class="p">,</span> <span class="n">weather_data</span><span class="p">)</span>
-        <span class="n">field_data</span><span class="p">[</span><span class="s1">&#39;recommendation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">recommendation</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">field_data</span><span class="p">[</span><span class="s1">&#39;recommendation&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;action&quot;</span><span class="p">:</span> <span class="s2">&quot;monitor&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;reasoning&quot;</span><span class="p">:</span> <span class="s2">&quot;Insufficient data for specific recommendation&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;priority&quot;</span><span class="p">:</span> <span class="s2">&quot;low&quot;</span>
-        <span class="p">}</span>
-    
-    <span class="k">return</span> <span class="n">field_data</span></div>
-
-
-<div class="viewcode-block" id="delete_field">
-<a class="viewcode-back" href="../app.html#app.delete_field">[docs]</a>
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/fields/&lt;field_id&gt;&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;DELETE&#39;</span><span class="p">])</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">delete_field</span><span class="p">(</span><span class="n">field_id</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Delete a field by ID for the logged-in user.</span>
-
-<span class="sd">    :param field_id: ID of the field to delete.</span>
-<span class="sd">    :return: JSON message indicating deletion status.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;logged_in&#39;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Unauthorized&quot;</span><span class="p">}),</span> <span class="mi">401</span>
-    
-    <span class="n">user_id</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">user_id</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;User ID not found in session&quot;</span><span class="p">}),</span> <span class="mi">401</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">field_id</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Field ID is required&quot;</span><span class="p">}),</span> <span class="mi">400</span>
-    
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Deleting field with ID: </span><span class="si">{</span><span class="n">field_id</span><span class="si">}</span><span class="s2"> for user ID: </span><span class="si">{</span><span class="n">user_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./data/fields.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">fields_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-            <span class="n">fields</span> <span class="o">=</span> <span class="n">fields_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fields&#39;</span><span class="p">,</span> <span class="p">[])</span>
-            <span class="n">updated_fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">field</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field_id&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">field_id</span> <span class="ow">and</span> <span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">)]</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./data/fields.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">({</span><span class="s2">&quot;fields&quot;</span><span class="p">:</span> <span class="n">updated_fields</span><span class="p">},</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Field deleted successfully&quot;</span><span class="p">})</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error deleting field: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Failed to delete field&quot;</span><span class="p">}),</span> <span class="mi">500</span>    </div>
-
-
-<div class="viewcode-block" id="create_field">
-<a class="viewcode-back" href="../app.html#app.create_field">[docs]</a>
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/api/fields/create&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">create_field</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Create a new field for the logged-in user.</span>
-
-<span class="sd">    Expects JSON with &#39;name&#39;, &#39;latitude&#39;, &#39;longitude&#39;, and &#39;crop_id&#39;.</span>
-
-<span class="sd">    :return: JSON with created field data or error.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;logged_in&#39;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Unauthorized&quot;</span><span class="p">}),</span> <span class="mi">401</span>
-    
-    <span class="n">user_id</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;user_id&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">user_id</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;User ID not found in session&quot;</span><span class="p">}),</span> <span class="mi">401</span>
-    
-    <span class="n">data</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Name required&quot;</span><span class="p">}),</span> <span class="mi">400</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;latitude&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;longitude&#39;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Latitude and longitude are required&quot;</span><span class="p">}),</span> <span class="mi">400</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;crop_id&#39;</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Crop ID is required&quot;</span><span class="p">}),</span> <span class="mi">400</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./data/fields.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">fields_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-            <span class="n">fields</span> <span class="o">=</span> <span class="n">fields_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fields&#39;</span><span class="p">,</span> <span class="p">[])</span>
-            <span class="k">if</span> <span class="n">fields</span><span class="p">:</span>
-                <span class="n">last_id</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;field_id&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">last_id</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-        <span class="n">last_id</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="n">new_field</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;field_id&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">last_id</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
-        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">),</span>
-        <span class="s2">&quot;crop_id&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;crop_id&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)),</span>
-        <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="n">user_id</span><span class="p">,</span>
-        <span class="s2">&quot;latitude&quot;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;latitude&#39;</span><span class="p">),</span>
-        <span class="s2">&quot;longitude&quot;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;longitude&#39;</span><span class="p">)</span>
-    <span class="p">}</span>
-
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./data/fields.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">fields_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-            <span class="n">fields</span> <span class="o">=</span> <span class="n">fields_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fields&#39;</span><span class="p">,</span> <span class="p">[])</span>
-            <span class="n">fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_field</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;./data/fields.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">({</span><span class="s2">&quot;fields&quot;</span><span class="p">:</span> <span class="n">fields</span><span class="p">},</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-
-        <span class="c1"># Add weather data to the newly created field</span>
-        <span class="n">weather</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">weather_api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;OPENWEATHER_API_KEY&#39;</span><span class="p">)</span>
-        <span class="n">lat</span> <span class="o">=</span> <span class="n">new_field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;latitude&#39;</span><span class="p">)</span>
-        <span class="n">lon</span> <span class="o">=</span> <span class="n">new_field</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;longitude&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">weather_api_key</span> <span class="ow">and</span> <span class="n">lat</span> <span class="ow">and</span> <span class="n">lon</span><span class="p">:</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;https://api.openweathermap.org/data/2.5/weather?lat=</span><span class="si">{</span><span class="n">lat</span><span class="si">}</span><span class="s2">&amp;lon=</span><span class="si">{</span><span class="n">lon</span><span class="si">}</span><span class="s2">&amp;units=metric&amp;appid=</span><span class="si">{</span><span class="n">weather_api_key</span><span class="si">}</span><span class="s2">&quot;</span>
-                <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">ok</span><span class="p">:</span>
-                    <span class="n">data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-                    <span class="n">weather</span> <span class="o">=</span> <span class="p">{</span>
-                        <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;temp&quot;</span><span class="p">),</span>
-                        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;weather&quot;</span><span class="p">,</span> <span class="p">[{}])[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;description&quot;</span><span class="p">),</span>
-                        <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;weather&quot;</span><span class="p">,</span> <span class="p">[{}])[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;icon&quot;</span><span class="p">),</span>
-                        <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;main&quot;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;humidity&quot;</span><span class="p">),</span>
-                    <span class="p">}</span>
-            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                <span class="n">weather</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Failed to fetch weather&quot;</span><span class="p">}</span>
-
-        <span class="n">new_field</span><span class="p">[</span><span class="s2">&quot;weather&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">weather</span>
-
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span>
-            <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Field created successfully&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;field&quot;</span><span class="p">:</span> <span class="n">new_field</span>
-        <span class="p">}),</span> <span class="mi">201</span>
-    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">jsonify</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Failed to create field&quot;</span><span class="p">}),</span> <span class="mi">500</span></div>
-
-
-<div class="viewcode-block" id="send_weather_periodically">
-<a class="viewcode-back" href="../app.html#app.send_weather_periodically">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">send_weather_periodically</span><span class="p">(</span><span class="n">sid</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Periodically send weather updates to a connected SocketIO client.</span>
-
-<span class="sd">    :param sid: SocketIO session ID.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">weather_api_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;OPENWEATHER_API_KEY&#39;</span><span class="p">)</span>
-    <span class="n">lat</span> <span class="o">=</span> <span class="mf">41.15788815839542</span>
-    <span class="n">lon</span> <span class="o">=</span> <span class="o">-</span><span class="mf">8.62913041410896</span>
-
-    <span class="k">while</span> <span class="n">sid</span> <span class="ow">in</span> <span class="n">connected_users</span><span class="p">:</span>
-        <span class="c1"># For testing purposes, you can use a static weather object</span>
-        <span class="n">weather</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
-            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s1">&#39;broken clouds&#39;</span><span class="p">,</span>
-            <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s1">&#39;04n&#39;</span><span class="p">,</span>
-            <span class="s2">&quot;humidity&quot;</span><span class="p">:</span> <span class="mi">94</span><span class="p">,</span>
-            <span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="s1">&#39;Porto&#39;</span>
-        <span class="p">}</span>
-        <span class="n">socketio</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="s1">&#39;weather_update&#39;</span><span class="p">,</span> <span class="n">weather</span><span class="p">,</span> <span class="n">room</span><span class="o">=</span><span class="n">sid</span><span class="p">)</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="handle_connect">
-<a class="viewcode-back" href="../app.html#app.handle_connect">[docs]</a>
-<span class="nd">@socketio</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;connect&#39;</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">handle_connect</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Handle new SocketIO client connection.</span>
-<span class="sd">    Starts a thread to send weather updates periodically.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">sid</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">sid</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Client connected: </span><span class="si">{</span><span class="n">sid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="n">connected_users</span><span class="p">[</span><span class="n">sid</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">join_room</span><span class="p">(</span><span class="n">sid</span><span class="p">)</span>
-    <span class="n">thread</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">send_weather_periodically</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">sid</span><span class="p">,))</span>
-    <span class="n">thread</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
-
-
-<div class="viewcode-block" id="handle_disconnect">
-<a class="viewcode-back" href="../app.html#app.handle_disconnect">[docs]</a>
-<span class="nd">@socketio</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="s1">&#39;disconnect&#39;</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">handle_disconnect</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Handle SocketIO client disconnection.</span>
-<span class="sd">    Removes user from connected users.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">sid</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">sid</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Client disconnected: </span><span class="si">{</span><span class="n">sid</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">sid</span> <span class="ow">in</span> <span class="n">connected_users</span><span class="p">:</span>
-        <span class="k">del</span> <span class="n">connected_users</span><span class="p">[</span><span class="n">sid</span><span class="p">]</span>
-    <span class="n">leave_room</span><span class="p">(</span><span class="n">sid</span><span class="p">)</span></div>
-
+<div class="viewcode-block" id="create_app"><a class="viewcode-back" href="../app.html#app.create_app">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">create_app</span><span class="p">():</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Create and configure the Flask application.&quot;&quot;&quot;</span>
+  <span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+  <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;SECRET_KEY&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;SECRET_KEY&#39;</span><span class="p">,</span> <span class="s1">&#39;your-secret-key-change-this&#39;</span><span class="p">)</span>
+  <span class="n">app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;SESSION_TYPE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;filesystem&#39;</span>
+
+  <span class="c1"># Configure CORS</span>
+  <span class="n">CORS</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">origins</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;http://localhost:5173&quot;</span><span class="p">],</span> <span class="n">supports_credentials</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="s2">&quot;DELETE&quot;</span><span class="p">])</span>
+
+  <span class="c1"># Register blueprints</span>
+  <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">auth_bp</span><span class="p">,</span> <span class="n">url_prefix</span><span class="o">=</span><span class="s1">&#39;/api&#39;</span><span class="p">)</span>
+  <span class="n">app</span><span class="o">.</span><span class="n">register_blueprint</span><span class="p">(</span><span class="n">fields_bp</span><span class="p">,</span> <span class="n">url_prefix</span><span class="o">=</span><span class="s1">&#39;/api&#39;</span><span class="p">)</span>
+
+  <span class="c1"># Basic route</span>
+  <span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)</span>
+  <span class="k">def</span><span class="w"> </span><span class="nf">index</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Root endpoint to check if the Flask backend is running.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Flask backend is running!&quot;</span><span class="p">,</span> <span class="s2">&quot;status&quot;</span><span class="p">:</span> <span class="s2">&quot;success&quot;</span><span class="p">}</span>
+
+  <span class="k">return</span> <span class="n">app</span></div>
+
+<div class="viewcode-block" id="create_socketio"><a class="viewcode-back" href="../app.html#app.create_socketio">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">create_socketio</span><span class="p">(</span><span class="n">app</span><span class="p">):</span>
+<span class="w">  </span><span class="sd">&quot;&quot;&quot;Create and configure SocketIO.&quot;&quot;&quot;</span>
+  <span class="n">socketio</span> <span class="o">=</span> <span class="n">SocketIO</span><span class="p">(</span>
+    <span class="n">app</span><span class="p">,</span>
+    <span class="n">cors_allowed_origins</span><span class="o">=</span><span class="s2">&quot;http://localhost:5173&quot;</span><span class="p">,</span>
+    <span class="n">manage_session</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">logger</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">engineio_logger</span><span class="o">=</span><span class="kc">True</span>
+  <span class="p">)</span>
+  
+  <span class="c1"># Register SocketIO handlers</span>
+  <span class="n">register_socketio_handlers</span><span class="p">(</span><span class="n">socketio</span><span class="p">)</span>
+  
+  <span class="k">return</span> <span class="n">socketio</span></div>
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Run the Flask app with SocketIO support.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">socketio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">allow_unsafe_werkzeug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+  <span class="n">app</span> <span class="o">=</span> <span class="n">create_app</span><span class="p">()</span>
+  <span class="n">socketio</span> <span class="o">=</span> <span class="n">create_socketio</span><span class="p">(</span><span class="n">app</span><span class="p">)</span>
+  <span class="n">socketio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">allow_unsafe_werkzeug</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 
-            <div class="clearer"></div>
+           </div>
           </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Daniel.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="Main">
-        <div class="sphinxsidebarwrapper">
-<search id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</search>
-<script>document.getElementById('searchbox').style.display = "block"</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="Related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">SmartSprout 1.0.0 documentation</a> &#187;</li>
-          <li class="nav-item nav-item-1"><a href="index.html" >Module code</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">app</a></li> 
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-    &#169; Copyright 2025, Daniel.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
-    </div>
-  </body>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
 </html>

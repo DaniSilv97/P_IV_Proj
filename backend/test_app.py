@@ -1,6 +1,6 @@
 import pytest
 import json
-from app import app
+from backend.app_old import app
 
 @pytest.fixture
 def client():

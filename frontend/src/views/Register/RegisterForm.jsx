@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useAuth } from '../../contexts/AuthContext';
 
 function EyeSvg(){
   return (
@@ -44,6 +46,7 @@ function UserSvg(){
 function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   
   const [formData, setFormData] = useState({
     firstName: '',
@@ -54,6 +57,10 @@ function SignUpForm() {
   });
 
   const [errors, setErrors] = useState({});
+  const [apiError, setApiError] = useState('');
+
+  const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -62,11 +69,17 @@ function SignUpForm() {
       [name]: value
     }));
     
+    // Clear field-specific error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
         [name]: ''
       }));
+    }
+    
+    // Clear API error when user starts typing
+    if (apiError) {
+      setApiError('');
     }
   };
 
@@ -102,25 +115,100 @@ function SignUpForm() {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const newErrors = validateForm();
     
+    // Clear previous errors
+    setErrors({});
+    setApiError('');
+    
+    // Validate form
+    const newErrors = validateForm();
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
     }
     
-    console.log('Sign up attempt:', {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      email: formData.email,
-      password: formData.password
-    });
+    setIsLoading(true);
+    
+    try {
+      const response = await fetch('http://localhost:5000/api/register', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.firstName,
+          surname: formData.lastName,
+          email: formData.email,
+          password: formData.password
+        })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log('Registration successful:', data);
+        
+        // Automatically log in the user after successful registration
+        try {
+          const loginResponse = await fetch('http://localhost:5000/api/login', {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              email: formData.email,
+              password: formData.password
+            })
+          });
+
+          if (loginResponse.ok) {
+            const userData = await loginResponse.json();
+            setUser(userData);
+            console.log('Auto-login successful:', userData);
+            navigate('/');
+          } else {
+            // Registration successful but auto-login failed, redirect to login page
+            console.log('Registration successful, but auto-login failed. Redirecting to login.');
+            navigate('/login');
+          }
+        } catch (loginError) {
+          console.error('Auto-login error:', loginError);
+          // Registration successful but auto-login failed, redirect to login page
+          navigate('/login');
+        }
+      } else {
+        // Handle registration errors
+        if (data.error) {
+          if (data.error.includes('email')) {
+            setApiError('An account with this email already exists. Please use a different email or try logging in.');
+          } else {
+            setApiError(data.error);
+          }
+        } else {
+          setApiError('Registration failed. Please try again.');
+        }
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      setApiError('Network error. Please check your connection and try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="space-y-4">
+      {/* Display API errors */}
+      {apiError && (
+        <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+          <p className="text-sm text-red-600">{apiError}</p>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
@@ -137,9 +225,10 @@ function SignUpForm() {
               required
               value={formData.firstName}
               onChange={handleInputChange}
+              disabled={isLoading}
               className={`block w-full pl-10 pr-3 py-3 border text-slate-700 rounded-lg focus:ring-2 focus:ring-main focus:border-main transition-all duration-200 ${
                 errors.firstName ? 'border-red-300' : 'border-gray-300'
-              }`}
+              } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
               placeholder="Enter your first name"
             />
           </div>
@@ -163,9 +252,10 @@ function SignUpForm() {
               required
               value={formData.lastName}
               onChange={handleInputChange}
+              disabled={isLoading}
               className={`block w-full pl-10 pr-3 py-3 border text-slate-700 rounded-lg focus:ring-2 focus:ring-main focus:border-main transition-all duration-200 ${
                 errors.lastName ? 'border-red-300' : 'border-gray-300'
-              }`}
+              } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
               placeholder="Enter your last name"
             />
           </div>
@@ -190,9 +280,10 @@ function SignUpForm() {
             required
             value={formData.email}
             onChange={handleInputChange}
+            disabled={isLoading}
             className={`block w-full pl-10 pr-3 py-3 border text-slate-700 rounded-lg focus:ring-2 focus:ring-main focus:border-main transition-all duration-200 ${
               errors.email ? 'border-red-300' : 'border-gray-300'
-            }`}
+            } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
             placeholder="Enter your email address"
           />
         </div>
@@ -216,15 +307,17 @@ function SignUpForm() {
             required
             value={formData.password}
             onChange={handleInputChange}
+            disabled={isLoading}
             className={`block w-full pl-10 pr-12 py-3 border text-slate-700 rounded-lg focus:ring-2 focus:ring-main focus:border-main transition-all duration-200 ${
               errors.password ? 'border-red-300' : 'border-gray-300'
-            }`}
+            } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
             placeholder="Create a password"
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-gray-600 transition-colors"
+            disabled={isLoading}
+            className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-gray-600 transition-colors disabled:opacity-50"
           >
             {showPassword ? (
               <EyeHiddenSvg/>
@@ -253,15 +346,17 @@ function SignUpForm() {
             required
             value={formData.confirmPassword}
             onChange={handleInputChange}
+            disabled={isLoading}
             className={`block w-full pl-10 pr-12 py-3 border text-slate-700 rounded-lg focus:ring-2 focus:ring-main focus:border-main transition-all duration-200 ${
               errors.confirmPassword ? 'border-red-300' : 'border-gray-300'
-            }`}
+            } ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
             placeholder="Confirm your password"
           />
           <button
             type="button"
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-gray-600 transition-colors"
+            disabled={isLoading}
+            className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-gray-600 transition-colors disabled:opacity-50"
           >
             {showConfirmPassword ? (
               <EyeHiddenSvg/>
@@ -277,9 +372,10 @@ function SignUpForm() {
 
       <button
         onClick={handleSubmit}
-        className="w-full py-3 px-4 bg-gradient-to-r from-main to-secondary text-white font-medium rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-main focus:ring-offset-2 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98]"
+        disabled={isLoading}
+        className="w-full py-3 px-4 bg-gradient-to-r from-main to-secondary text-white font-medium rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-main focus:ring-offset-2 transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
       >
-        Create Account
+        {isLoading ? 'Creating Account...' : 'Create Account'}
       </button>
     </div>
   );
